@@ -8,6 +8,8 @@ import { useToast } from './Toast'
 
 import CustomizationModal from './CustomizationModal'
 
+import RobotProjectDetails from './RobotProjectDetails'
+
 const ProjectDetails = () => {
     const { id } = useParams()
     const navigate = useNavigate()
@@ -48,13 +50,22 @@ const ProjectDetails = () => {
     if (loading) return <div className="min-h-screen bg-black" />
     if (!project) return null
 
+    // Check if it's a robot project for special UI
+    const isRobotProject = project.title.toLowerCase().includes('robot') ||
+        project.title.toLowerCase().includes('robo') ||
+        project.category?.toLowerCase() === 'robotics';
+
+    if (isRobotProject) {
+        return <RobotProjectDetails project={project} />;
+    }
+
     return (
-        <div className="min-h-screen bg-[#0A0A0A] text-white pt-20 px-4 md:px-8 pb-12 overflow-x-hidden font-display">
+        <div className="min-h-screen bg-gray-50 dark:bg-[#0A0A0A] text-gray-900 dark:text-white pt-20 px-4 md:px-8 pb-12 overflow-x-hidden font-display">
             {/* Top Navigation / Breadcrumbs */}
             <div className="flex justify-between items-center mb-8 max-w-7xl mx-auto">
                 <button
                     onClick={() => navigate('/')}
-                    className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                    className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                 >
                     <ArrowLeft size={16} /> Back
                 </button>
@@ -70,7 +81,7 @@ const ProjectDetails = () => {
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="relative bg-[#1A1A1A] rounded-[3rem] rounded-tl-[6rem] p-8 h-[400px] flex items-center justify-center overflow-hidden group"
+                        className="relative bg-white dark:bg-[#1A1A1A] rounded-[3rem] rounded-tl-[6rem] p-8 h-[400px] flex items-center justify-center overflow-hidden group shadow-lg dark:shadow-none"
                     >
                         <div className="absolute top-8 right-8">
                             <Plus className="text-gray-600" />
@@ -85,7 +96,7 @@ const ProjectDetails = () => {
                             <p className="text-xl font-bold">{project.price}</p>
                         </div>
                         {/* View in 3D Badge */}
-                        <div className="absolute -top-4 -right-4 w-24 h-24 bg-[#1A1A1A] rounded-full flex items-center justify-center border-4 border-[#0A0A0A]">
+                        <div className="absolute -top-4 -right-4 w-24 h-24 bg-white dark:bg-[#1A1A1A] rounded-full flex items-center justify-center border-4 border-gray-50 dark:border-[#0A0A0A]">
                             <span className="text-[10px] text-center font-bold text-gray-400">VIEW IN<br />3D</span>
                         </div>
                     </motion.div>
@@ -96,14 +107,14 @@ const ProjectDetails = () => {
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="bg-[#1A1A1A] rounded-[2rem] p-6 h-48 relative overflow-hidden group"
+                            className="bg-white dark:bg-[#1A1A1A] rounded-[2rem] p-6 h-48 relative overflow-hidden group shadow-lg dark:shadow-none"
                         >
                             <div className="absolute top-4 left-4">
                                 <Plus className="text-gray-600 w-4 h-4" />
                             </div>
                             <div className="absolute bottom-4 left-4">
-                                <p className="text-[10px] text-gray-400 uppercase">Priority Rating</p>
-                                <p className="text-sm font-bold text-white">{project.priority ? project.priority.toUpperCase() : 'STANDARD'}</p>
+                                <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase">Priority Rating</p>
+                                <p className="text-sm font-bold text-gray-900 dark:text-white">{project.priority ? project.priority.toUpperCase() : 'STANDARD'}</p>
                             </div>
                             <div className="w-full h-full bg-gradient-to-br from-purple-900/20 to-transparent absolute top-0 left-0" />
                         </motion.div>
@@ -111,10 +122,10 @@ const ProjectDetails = () => {
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
-                            className="bg-[#1A1A1A] rounded-full flex items-center justify-center h-48 border border-white/5 relative group cursor-pointer hover:bg-white/5 transition-colors"
+                            className="bg-white dark:bg-[#1A1A1A] rounded-full flex items-center justify-center h-48 border border-gray-200 dark:border-white/5 relative group cursor-pointer hover:bg-gray-100 dark:hover:bg-white/5 transition-colors shadow-lg dark:shadow-none"
                         >
                             <div className="text-center">
-                                <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center mx-auto mb-2 group-hover:bg-white group-hover:text-black transition-colors">
+                                <div className="w-12 h-12 rounded-full border border-gray-300 dark:border-white/20 flex items-center justify-center mx-auto mb-2 group-hover:bg-gray-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black transition-colors">
                                     <ArrowUpRight size={20} />
                                 </div>
                                 <span className="text-xs tracking-widest text-gray-400">MORE DETAILS</span>
@@ -138,7 +149,7 @@ const ProjectDetails = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.45 }}
-                        className="text-gray-400 text-lg mb-8 max-w-xl"
+                        className="text-gray-600 dark:text-gray-400 text-lg mb-8 max-w-xl"
                     >
                         {project.description}
                     </motion.p>
@@ -149,18 +160,18 @@ const ProjectDetails = () => {
                         transition={{ delay: 0.5 }}
                         className="flex items-center gap-6 mb-16"
                     >
-                        <button className="bg-white text-black px-8 py-4 rounded-full font-bold text-sm tracking-widest hover:bg-gray-200 transition-colors">
+                        <button className="bg-gray-900 dark:bg-white text-white dark:text-black px-8 py-4 rounded-full font-bold text-sm tracking-widest hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors">
                             ADD TO CART
                         </button>
                         <button
                             onClick={() => setIsModalOpen(true)}
-                            className="bg-transparent border border-white/20 text-white px-8 py-4 rounded-full font-bold text-sm tracking-widest hover:bg-white/10 transition-colors flex items-center gap-2"
+                            className="bg-transparent border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white px-8 py-4 rounded-full font-bold text-sm tracking-widest hover:bg-gray-100 dark:hover:bg-white/10 transition-colors flex items-center gap-2"
                         >
                             <Settings2 size={16} />
                             CUSTOMIZE
                         </button>
-                        <div className="h-14 w-32 bg-[#1A1A1A] rounded-full flex items-center px-4 gap-3 cursor-pointer hover:bg-[#252525] transition-colors">
-                            <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+                        <div className="h-14 w-32 bg-white dark:bg-[#1A1A1A] rounded-full flex items-center px-4 gap-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-[#252525] transition-colors shadow-md dark:shadow-none">
+                            <div className="w-8 h-8 bg-gray-900 dark:bg-black rounded-full flex items-center justify-center">
                                 <Play size={12} fill="white" />
                             </div>
                             <span className="text-xs text-gray-400">Watch<br />Demo</span>
@@ -177,12 +188,12 @@ const ProjectDetails = () => {
                                 key={idx}
                                 className="group cursor-pointer"
                             >
-                                <div className="flex items-baseline gap-8 py-4 border-b border-white/10 group-hover:border-white/40 transition-colors">
-                                    <span className="text-2xl font-light text-gray-600 group-hover:text-white transition-colors">
+                                <div className="flex items-baseline gap-8 py-4 border-b border-gray-200 dark:border-white/10 group-hover:border-gray-400 dark:group-hover:border-white/40 transition-colors">
+                                    <span className="text-2xl font-light text-gray-400 dark:text-gray-600 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                                         0{idx + 1}
                                     </span>
                                     <div className="flex-1 flex justify-between items-baseline">
-                                        <p className="text-sm font-medium tracking-wide text-gray-300 group-hover:text-white transition-colors uppercase">
+                                        <p className="text-sm font-medium tracking-wide text-gray-500 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors uppercase">
                                             {feature}
                                         </p>
                                         <span className="text-xs text-gray-600 font-mono">/2025</span>

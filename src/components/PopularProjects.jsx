@@ -106,7 +106,7 @@ const ProjectCard = ({ project, navigate, addedToCart, handleAddToCart }) => {
                     {/* Price Section */}
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex flex-col">
-                            <p className="text-xl font-bold text-primary">{project.price}</p>
+                            <p className="text-xl font-bold text-primary">{project.formattedPrice || `₹${project.price}`}</p>
                             {project.spent > 0 && (
                                 <p className="text-xs text-gray-500 dark:text-gray-400">
                                     Spent: {project.spent}
@@ -233,7 +233,9 @@ const PopularProjects = () => {
             try {
                 setLoading(true)
                 const featuredProjects = await projectsAPI.getFeatured(6)
-                setProjects(featuredProjects)
+                // Transform data immediately so categories and other fields are available for filtering
+                const transformed = featuredProjects.map((p, index) => transformProject(p, index));
+                setProjects(transformed)
             } catch (error) {
                 console.error('Error fetching popular projects:', error)
             } finally {
@@ -324,6 +326,10 @@ const PopularProjects = () => {
                             </div>
                         ))}
                     </div>
+                ) : projects.length === 0 ? (
+                    <div className="text-center py-20">
+                        <p className="text-xl text-gray-500 dark:text-gray-400">No projects found. Please add some projects to the database.</p>
+                    </div>
                 ) : (
                     <div className="space-y-20 mt-12">
                         {categories
@@ -351,14 +357,10 @@ const PopularProjects = () => {
 
                                         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                                             {categoryProjects.map((project, index) => {
-                                                const transformedProject = transformProject(project, index);
-
-                                                if (!transformedProject) return null;
-
                                                 return (
                                                     <ProjectCard
-                                                        key={transformedProject.id}
-                                                        project={transformedProject}
+                                                        key={project.id}
+                                                        project={project}
                                                         navigate={navigate}
                                                         addedToCart={addedToCart}
                                                         handleAddToCart={handleAddToCart}
