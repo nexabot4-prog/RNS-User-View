@@ -84,23 +84,9 @@
     color: var(--nav-accent);
 }
 
-.logo-icon {
-    width: 32px;
-    height: 32px;
-    color: var(--nav-accent);
-    transition: transform 0.2s ease;
-}
 
-.logo-link:hover .logo-icon {
-    transform: scale(1.1);
-}
 
-.logo-text {
-    background: var(--nav-accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
+
 
 /* Desktop Navigation */
 .navbar-menu {

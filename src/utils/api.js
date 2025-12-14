@@ -31,3 +31,19 @@ export const projectsAPI = {
         }
     }
 };
+
+export const ordersAPI = {
+    createOrder: async (orderData) => {
+        try {
+            const { error } = await supabase
+                .from('orders')
+                .insert([orderData]);
+
+            if (error) throw error;
+            return { success: true };
+        } catch (error) {
+            console.error('Error creating order:', error);
+            return { success: false, error };
+        }
+    }
+};

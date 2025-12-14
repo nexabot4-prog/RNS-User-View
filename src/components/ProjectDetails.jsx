@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowUpRight, Play, Star, Plus, Settings2 } from 'lucide-react'
-import { projectsAPI } from '../utils/api'
+import { projectsAPI, ordersAPI } from '../utils/api'
 import { transformProject } from '../utils/projectTransform'
 import { useToast } from './Toast'
 
 import CustomizationModal from './CustomizationModal'
+import ProjectFullDetailsModal from './ProjectFullDetailsModal'
+import CheckoutModal from './CheckoutModal'
 
 import RobotProjectDetails from './RobotProjectDetails'
 
@@ -16,6 +18,8 @@ const ProjectDetails = () => {
     const [project, setProject] = useState(null)
     const [loading, setLoading] = useState(true)
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false)
+    const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
     const { showToast } = useToast()
 
     useEffect(() => {
@@ -122,6 +126,7 @@ const ProjectDetails = () => {
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
+                            onClick={() => setIsDetailsModalOpen(true)}
                             className="bg-white dark:bg-[#1A1A1A] rounded-full flex items-center justify-center h-48 border border-gray-200 dark:border-white/5 relative group cursor-pointer hover:bg-gray-100 dark:hover:bg-white/5 transition-colors shadow-lg dark:shadow-none"
                         >
                             <div className="text-center">
@@ -160,8 +165,11 @@ const ProjectDetails = () => {
                         transition={{ delay: 0.5 }}
                         className="flex items-center gap-6 mb-16"
                     >
-                        <button className="bg-gray-900 dark:bg-white text-white dark:text-black px-8 py-4 rounded-full font-bold text-sm tracking-widest hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors">
-                            ADD TO CART
+                        <button
+                            onClick={() => setIsCheckoutModalOpen(true)}
+                            className="bg-gray-900 dark:bg-white text-white dark:text-black px-8 py-4 rounded-full font-bold text-sm tracking-widest hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
+                        >
+                            BUY NOW
                         </button>
                         <button
                             onClick={() => setIsModalOpen(true)}
@@ -210,7 +218,18 @@ const ProjectDetails = () => {
                 onClose={handleModalClose}
                 projectTitle={project.title}
             />
-        </div>
+
+            <ProjectFullDetailsModal
+                isOpen={isDetailsModalOpen}
+                onClose={() => setIsDetailsModalOpen(false)}
+                project={project}
+            />
+            <CheckoutModal
+                isOpen={isCheckoutModalOpen}
+                onClose={() => setIsCheckoutModalOpen(false)}
+                project={project}
+            />
+        </div >
     )
 }
 

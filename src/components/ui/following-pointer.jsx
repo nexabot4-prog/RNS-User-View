@@ -31,16 +31,10 @@ export const FollowerPointerCard = ({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const ref = React.useRef(null);
-  const [rect, setRect] = useState(null);
+  const rectRef = React.useRef(null);
   const [isInside, setIsInside] = useState(false);
   const [title, setTitle] = useState(initialTitle);
   const [color, setColor] = useState(colors[0]);
-
-  useEffect(() => {
-    if (ref.current) {
-      setRect(ref.current.getBoundingClientRect());
-    }
-  }, []);
 
   useEffect(() => {
     if (title) {
@@ -48,27 +42,53 @@ export const FollowerPointerCard = ({
     }
   }, [title]);
 
-  const handleMouseMove = (e) => {
-    if (rect) {
-      const scrollX = window.scrollX;
-      const scrollY = window.scrollY;
-      x.set(e.clientX - rect.left + scrollX);
-      y.set(e.clientY - rect.top + scrollY);
-    }
-  };
-  const handleMouseLeave = () => {
-    setIsInside(false);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (ref.current) {
+        rectRef.current = ref.current.getBoundingClientRect();
+      }
+    };
 
-  const handleMouseEnter = () => {
-    setIsInside(true);
-  };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const handlePointerMove = (e) => {
+      if (rectRef.current) {
+        x.set(e.clientX - rectRef.current.left);
+        y.set(e.clientY - rectRef.current.top);
+      }
+    };
+
+    const handlePointerEnter = () => {
+      if (element) {
+        rectRef.current = element.getBoundingClientRect();
+      }
+      setIsInside(true);
+    };
+
+    const handlePointerLeave = () => {
+      setIsInside(false);
+    };
+
+    element.addEventListener("pointermove", handlePointerMove, { passive: true });
+    element.addEventListener("pointerenter", handlePointerEnter);
+    element.addEventListener("pointerleave", handlePointerLeave);
+
+    return () => {
+      element.removeEventListener("pointermove", handlePointerMove);
+      element.removeEventListener("pointerenter", handlePointerEnter);
+      element.removeEventListener("pointerleave", handlePointerLeave);
+    };
+  }, []);
+
   return (
     <FollowerPointerContext.Provider value={{ setTitle }}>
       <div
-        onMouseLeave={handleMouseLeave}
-        onMouseEnter={handleMouseEnter}
-        onMouseMove={handleMouseMove}
         style={{
           cursor: "none",
         }}
@@ -93,8 +113,8 @@ export const FollowPointer = ({
     <motion.div
       className="absolute z-[500] h-4 w-4 rounded-full"
       style={{
-        top: y,
-        left: x,
+        x,
+        y,
         pointerEvents: "none",
       }}
       initial={{

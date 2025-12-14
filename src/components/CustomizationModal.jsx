@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Calendar, FileText, Type, ChevronRight, ChevronLeft, Upload, File, User, Mail, School, Star } from 'lucide-react';
 import { FileUpload } from "@/components/ui/file-upload";
 import { useToast } from "@/components/Toast";
+import { ordersAPI } from '../utils/api';
 
 const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
     const { showToast } = useToast();
@@ -80,7 +81,7 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
         if (step > 1) setStep(step - 1);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const error = validateStep(3);
         if (error) {
@@ -88,9 +89,48 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
             return;
         }
 
-        console.log('Final Submission:', formData);
-        onClose(true);
-        setTimeout(() => setStep(1), 500);
+        showToast('Submitting request...', 'info');
+
+        const { success, error: apiError } = await ordersAPI.createOrder({
+            project_title: formData.title,
+            // Use 0 or a base price if available, or null if schema allows (we made it nullable)
+            price: 0,
+            status: 'customization_requested',
+            // Customer Details
+            customer_name: formData.name,
+            phone_number: formData.phone,
+            college_name: formData.college,
+            user_email: formData.email,
+            // Custom Fields
+            is_custom: true,
+            custom_abstract: formData.abstract,
+            custom_deadline: formData.deadline,
+            custom_requirements: formData.requirements,
+            custom_features: formData.features
+            // Note: File upload logic would go here if API supported storage
+        });
+
+        if (success) {
+            showToast('Customization request submitted!', 'success');
+            onClose(true);
+            setTimeout(() => setStep(1), 500);
+            setFormData({
+                title: projectTitle || '',
+                abstract: '',
+                deadline: '',
+                requirements: '',
+                specifications: '',
+                features: '',
+                file: null,
+                name: '',
+                email: '',
+                phone: '',
+                college: ''
+            });
+        } else {
+            console.error(apiError);
+            showToast('Failed to submit request. Please try again.', 'error');
+        }
     };
 
     const renderStep1 = () => (
@@ -372,7 +412,7 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                                     <button
                                         form="customization-form"
                                         type="submit"
-                                        className="bg-primary text-white font-bold px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-primary/90 transition-colors bg-blue-600"
+                                        className="bg-white text-black font-bold px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-gray-200 transition-colors"
                                     >
                                         Submit Request <Send size={16} />
                                     </button>

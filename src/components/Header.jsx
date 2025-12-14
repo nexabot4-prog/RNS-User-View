@@ -101,10 +101,16 @@ const Header = ({ onNavigate }) => {
                 {/* Logo Section */}
                 <div className="navbar-logo">
                     <a href="#home" className="logo-link" onClick={(e) => { e.preventDefault(); handleNavClick('#home'); }}>
-                        <div className="logo-icon">
-                            <Zap className="w-full h-full" strokeWidth={2} />
-                        </div>
-                        <span className="logo-text">RNS INNOBOTICS</span>
+                        <span
+                            className="brand-logo-text font-bold text-xl"
+                            style={{
+                                color: theme === 'dark' ? '#FFFFFF' : '#000000',
+                                background: 'none',
+                                WebkitTextFillColor: 'initial'
+                            }}
+                        >
+                            RNS INNOBOTICS
+                        </span>
                     </a>
                 </div>
 

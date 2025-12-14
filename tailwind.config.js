@@ -71,10 +71,9 @@ export default {
 				}
 			},
 			fontFamily: {
-				display: [
-					'Space Grotesk',
-					'sans-serif'
-				]
+				sans: ['Outfit', 'sans-serif'],
+				display: ['Space Grotesk', 'sans-serif'],
+				body: ['Outfit', 'sans-serif']
 			},
 			borderRadius: {
 				DEFAULT: '0.5rem',

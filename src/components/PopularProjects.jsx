@@ -3,9 +3,10 @@ import { motion } from 'framer-motion'
 import { ShoppingCart, Check, Clock, Star } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useToast } from './Toast'
-import { projectsAPI } from '../utils/api'
+import { projectsAPI, ordersAPI } from '../utils/api'
 import { transformProject } from '../utils/projectTransform'
 import CustomizationModal from './CustomizationModal'
+import CheckoutModal from './CheckoutModal'
 import { Link, Plus } from 'lucide-react'
 
 import { Button as MovingBorderButton } from "@/components/ui/moving-border";
@@ -149,7 +150,7 @@ const ProjectCard = ({ project, navigate, addedToCart, handleAddToCart }) => {
                         ) : (
                             <>
                                 <ShoppingCart className="w-4 h-4" />
-                                <span>Add to Cart</span>
+                                <span>Buy Now</span>
                             </>
                         )}
                     </MovingBorderButton>
@@ -196,6 +197,8 @@ const PopularProjects = () => {
     const [searchQuery, setSearchQuery] = useState("")
     const [activeCategory, setActiveCategory] = useState("all")
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
+    const [selectedProjectForCheckout, setSelectedProjectForCheckout] = useState(null)
     const { showToast } = useToast()
     const navigate = useNavigate()
 
@@ -207,7 +210,6 @@ const PopularProjects = () => {
     ];
 
     const categories = [
-        { id: 'all', label: 'All Projects', buttonLabel: 'All' },
         { id: 'hardware', label: 'Hardware Projects', buttonLabel: 'Hardware' },
         { id: 'software', label: 'Software Solutions', buttonLabel: 'Software' },
         { id: 'integration', label: 'Hardware & Software Integration', buttonLabel: 'Integration' }
@@ -232,7 +234,7 @@ const PopularProjects = () => {
         const fetchProjects = async () => {
             try {
                 setLoading(true)
-                const featuredProjects = await projectsAPI.getFeatured(6)
+                const featuredProjects = await projectsAPI.getFeatured(12)
                 // Transform data immediately so categories and other fields are available for filtering
                 const transformed = featuredProjects.map((p, index) => transformProject(p, index));
                 setProjects(transformed)
@@ -257,20 +259,10 @@ const PopularProjects = () => {
         return () => window.removeEventListener('filter-category', handleFilterEvent);
     }, []);
 
-    const handleAddToCart = (e, projectId, projectTitle, price) => {
+    const handleAddToCart = async (e, projectId, projectTitle, price) => {
         e.stopPropagation() // Prevent card click when clicking add to cart
-        console.log(`Added to cart: ${projectTitle} - ${price}`)
-        setAddedToCart(prev => ({ ...prev, [projectId]: true }))
-
-        showToast(
-            `🛒 ${projectTitle} added to cart!\nPrice: ₹${price}`,
-            'success',
-            3000
-        )
-
-        setTimeout(() => {
-            setAddedToCart(prev => ({ ...prev, [projectId]: false }))
-        }, 2000)
+        setSelectedProjectForCheckout({ id: projectId, title: projectTitle, price: price })
+        setIsCheckoutModalOpen(true)
     }
 
     // handleCardClick is now passed to ProjectCard
@@ -356,7 +348,7 @@ const PopularProjects = () => {
                                         </div>
 
                                         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                                            {categoryProjects.map((project, index) => {
+                                            {categoryProjects.slice(0, 3).map((project, index) => {
                                                 return (
                                                     <ProjectCard
                                                         key={project.id}
@@ -384,6 +376,11 @@ const PopularProjects = () => {
                 isOpen={isModalOpen}
                 onClose={setIsModalOpen}
                 projectTitle=""
+            />
+            <CheckoutModal
+                isOpen={isCheckoutModalOpen}
+                onClose={() => setIsCheckoutModalOpen(false)}
+                project={selectedProjectForCheckout}
             />
         </section >
     )

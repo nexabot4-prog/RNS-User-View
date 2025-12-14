@@ -30,3 +30,51 @@ create table public.projects (
   constraint projects_pkey primary key (id),
   constraint projects_created_by_fkey foreign KEY (created_by) references users (id) on update CASCADE on delete set null
 ) TABLESPACE pg_default;
+
+-- Create orders table
+create table public.orders (
+  id uuid not null default gen_random_uuid(),
+  project_id uuid null,
+  project_title text not null,
+  price numeric(15, 2) null,
+  status text not null default 'pending',
+  customer_name text not null,
+  phone_number text not null,
+  college_name text null,
+  is_custom boolean default false,
+  custom_abstract text null,
+  custom_deadline date null,
+  custom_requirements text null,
+  custom_features text null,
+  user_id uuid null,
+  user_email text null,
+  created_at timestamp without time zone not null default CURRENT_TIMESTAMP,
+  constraint orders_pkey primary key (id),
+  constraint orders_project_id_fkey foreign KEY (project_id) references projects (id) on delete cascade
+) TABLESPACE pg_default;
+
+-- Grant necessary permissions to the anon and authenticated roles
+GRANT USAGE ON SCHEMA public TO anon, authenticated;
+GRANT ALL ON TABLE public.orders TO anon, authenticated;
+
+-- Enable RLS
+alter table public.orders enable row level security;
+
+-- Create policy to allow anyone to create orders
+drop policy if exists "Enable insert for all users" on public.orders;
+create policy "Enable insert for all users"
+on public.orders
+for insert
+to public
+with check (true);
+
+-- Create policy to allow users to view their own orders (by email or user_id)
+drop policy if exists "Enable select for users based on email or user_id" on public.orders;
+create policy "Enable select for users based on email or user_id"
+on public.orders
+for select
+to public
+using (
+  (auth.uid() = user_id) or 
+  (auth.jwt() ->> 'email' = user_email)
+);
