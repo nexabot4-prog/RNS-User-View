@@ -106,60 +106,69 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
             fileUrl = publicUrl;
         }
 
-        const { success, error: apiError } = await ordersAPI.createOrder({
-            project_title: formData.title,
-            // Use 0 or a base price if available, or null if schema allows (we made it nullable)
-            price: 0,
-            status: 'customization_requested',
-            // Customer Details
-            customer_name: formData.name,
-            phone_number: formData.phone,
-            college_name: formData.college,
-            user_email: formData.email,
-            // Custom Fields
-            is_custom: true,
-            custom_abstract: formData.abstract,
-            custom_deadline: formData.deadline,
-            custom_requirements: formData.requirements,
-            custom_features: formData.features,
-            file_url: fileUrl
-            // Note: File upload logic would go here if API supported storage
-        });
-
-        if (success) {
-            // showToast('Customization request submitted!', 'success');
-            // Trigger Success Modal instead of closing immediately
-            const orderDetailsForModal = {
+        try {
+            const { success, error: apiError } = await ordersAPI.createOrder({
                 project_title: formData.title,
+                // Use 0 or a base price if available, or null if schema allows (we made it nullable)
+                price: 0,
+                status: 'customization_requested',
+                // Customer Details
                 customer_name: formData.name,
-                user_email: formData.email,
                 phone_number: formData.phone,
-                id: 'REF-' + Math.random().toString(36).substr(2, 6).toUpperCase() // Placeholder ID until API returns real one
-            };
-            setSuccessDetails(orderDetailsForModal);
-            setShowSuccess(true);
-
-            // Send Email in background
-            ordersAPI.sendOrderEmail(orderDetailsForModal);
-
-            // Reset form in background
-            setTimeout(() => setStep(1), 500);
-            setFormData({
-                title: projectTitle || '',
-                abstract: '',
-                deadline: '',
-                requirements: '',
-                specifications: '',
-                features: '',
-                file: null,
-                name: '',
-                email: '',
-                phone: '',
-                college: ''
+                college_name: formData.college,
+                user_email: formData.email,
+                // Custom Fields
+                is_custom: true,
+                custom_abstract: formData.abstract,
+                custom_deadline: formData.deadline,
+                custom_requirements: formData.requirements,
+                custom_features: formData.features,
+                file_url: fileUrl
+                // Note: File upload logic would go here if API supported storage
             });
-        } else {
-            console.error(apiError);
-            showToast('Failed to submit request. Please try again.', 'error');
+
+            if (success) {
+                // showToast('Customization request submitted!', 'success');
+                // Trigger Success Modal instead of closing immediately
+                const orderDetailsForModal = {
+                    project_title: formData.title,
+                    customer_name: formData.name,
+                    user_email: formData.email,
+                    phone_number: formData.phone,
+                    id: 'REF-' + Math.random().toString(36).substr(2, 6).toUpperCase() // Placeholder ID until API returns real one
+                };
+                setSuccessDetails(orderDetailsForModal);
+                setShowSuccess(true);
+
+                // Send Email in background
+                ordersAPI.sendOrderEmail(orderDetailsForModal);
+
+                // Reset form in background
+                setTimeout(() => setStep(1), 500);
+                setFormData({
+                    title: projectTitle || '',
+                    abstract: '',
+                    deadline: '',
+                    requirements: '',
+                    specifications: '',
+                    features: '',
+                    file: null,
+                    name: '',
+                    email: '',
+                    phone: '',
+                    college: ''
+                });
+            } else {
+                console.error("Order creation failed:", apiError);
+                if (apiError && apiError.code === '400') {
+                    showToast('Database Schema mismatch. Please run migration.', 'error');
+                } else {
+                    showToast('Failed to submit request. Please try again.', 'error');
+                }
+            }
+        } catch (err) {
+            console.error("Unexpected error in CustomizationModal:", err);
+            showToast('An unexpected error occurred.', 'error');
         }
     };
 

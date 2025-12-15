@@ -49,9 +49,15 @@ export const projectsAPI = {
 export const ordersAPI = {
     async createOrder(orderData) {
         try {
+            // Generate ID client-side if DB doesn't have default
+            const payload = {
+                id: crypto.randomUUID(),
+                ...orderData
+            };
+
             const { error } = await supabase
                 .from('orders')
-                .insert([orderData]);
+                .insert([payload]);
 
             if (error) throw error;
             return { success: true };

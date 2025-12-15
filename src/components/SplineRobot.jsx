@@ -20,27 +20,35 @@ export default function SplineRobot() {
                         </div>
                     }
                 >
-                    <Spline
-                        scene="https://prod.spline.design/p6PbWoZkUWP8-WWq/scene.splinecode"
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            touchAction: 'none',
-                            pointerEvents: 'auto'
-                        }}
-                        onLoad={(spline) => {
-                            setTimeout(() => {
-                                const logo = document.querySelector('#spline-badge');
-                                if (logo) logo.style.display = 'none';
-
-                                // Fallback for newer Spline versions or different structures
-                                const allLinks = document.querySelectorAll('a[href^="https://spline.design"]');
-                                allLinks.forEach(link => {
-                                    link.style.display = 'none';
-                                });
-                            }, 500); // Small delay to ensure render
-                        }}
-                    />
+                    {/* 
+                      Spline "buildTimeline" error usually happens due to version mismatch or bad scene.
+                      We'll wrap it in a safe container or just ensure the scene is valid.
+                      If the error persists, consider using a static image fallback.
+                    */}
+                    <div className="w-full h-full">
+                        <Spline
+                            scene="https://prod.spline.design/p6PbWoZkUWP8-WWq/scene.splinecode"
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                touchAction: 'none',
+                                pointerEvents: 'auto'
+                            }}
+                            onLoad={(spline) => {
+                                setTimeout(() => {
+                                    const logo = document.querySelector('#spline-badge');
+                                    if (logo) logo.style.display = 'none';
+                                    const allLinks = document.querySelectorAll('a[href^="https://spline.design"]');
+                                    allLinks.forEach(link => {
+                                        link.style.display = 'none';
+                                    });
+                                }, 500);
+                            }}
+                            onError={(e) => {
+                                console.error("Spline load error:", e);
+                            }}
+                        />
+                    </div>
                 </Suspense>
             </div>
         </div>
