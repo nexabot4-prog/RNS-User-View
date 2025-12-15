@@ -178,13 +178,62 @@ const ProjectDetails = () => {
                             <Settings2 size={16} />
                             CUSTOMIZE
                         </button>
-                        <div className="h-14 w-32 bg-white dark:bg-[#1A1A1A] rounded-full flex items-center px-4 gap-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-[#252525] transition-colors shadow-md dark:shadow-none">
+                        <a
+                            href={project.demo_video_url || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`h-14 w-32 bg-white dark:bg-[#1A1A1A] rounded-full flex items-center px-4 gap-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-[#252525] transition-colors shadow-md dark:shadow-none ${!project.demo_video_url && 'opacity-50 cursor-not-allowed pointer-events-none'}`}
+                        >
                             <div className="w-8 h-8 bg-gray-900 dark:bg-black rounded-full flex items-center justify-center">
                                 <Play size={12} fill="white" />
                             </div>
                             <span className="text-xs text-gray-400">Watch<br />Demo</span>
-                        </div>
+                        </a>
                     </motion.div>
+
+                    {/* Packages Section */}
+                    {project.packages && project.packages.length > 0 && (
+                        <div className="mb-12">
+                            <h3 className="text-2xl font-bold mb-6">Available Packages</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {project.packages.map((pkg, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.5 + (idx * 0.1) }}
+                                        className="bg-white dark:bg-[#1A1A1A] p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow"
+                                    >
+                                        <div className="flex justify-between items-start mb-4">
+                                            <h4 className="font-bold text-lg">{pkg.name || `Package ${idx + 1}`}</h4>
+                                            <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-bold">
+                                                ₹{pkg.price ? Number(pkg.price).toLocaleString() : 'TBD'}
+                                            </span>
+                                        </div>
+                                        {pkg.description && (
+                                            <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">{pkg.description}</p>
+                                        )}
+                                        {pkg.features && (
+                                            <ul className="space-y-2">
+                                                {pkg.features.map((feature, fIdx) => (
+                                                    <li key={fIdx} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                                                        {feature}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                        <button
+                                            onClick={() => setIsCheckoutModalOpen(true)}
+                                            className="w-full mt-6 py-2 rounded-lg border border-gray-200 dark:border-white/10 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-sm font-medium"
+                                        >
+                                            Select Package
+                                        </button>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Numbered Feature List */}
                     <div className="space-y-6">
@@ -212,6 +261,34 @@ const ProjectDetails = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Project Gallery Section */}
+            {project.project_images && project.project_images.length > 0 && (
+                <div className="max-w-7xl mx-auto mt-20">
+                    <h3 className="text-2xl font-bold mb-8 pl-4 border-l-4 border-black dark:border-white">Project Gallery</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-4 sm:px-0">
+                        {project.project_images.map((img, idx) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: idx * 0.1 }}
+                                viewport={{ once: true }}
+                                className="aspect-square relative group overflow-hidden rounded-2xl cursor-pointer"
+                            >
+                                <img
+                                    src={typeof img === 'string' ? img : img.url}
+                                    alt={`Gallery ${idx}`}
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <Plus className="text-white w-8 h-8" />
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             <CustomizationModal
                 isOpen={isModalOpen}

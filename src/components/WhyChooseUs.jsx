@@ -61,7 +61,7 @@ const WhyChooseUs = () => {
                                 <motion.div
                                     whileHover={{ scale: 1.1, rotate: 5 }}
                                     transition={{ duration: 0.3 }}
-                                    className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300"
+                                    className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-white dark:text-blue-600 group-hover:bg-primary group-hover:text-white transition-all duration-300"
                                 >
                                     <IconComponent className="w-8 h-8" />
                                 </motion.div>

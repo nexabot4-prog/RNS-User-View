@@ -7,7 +7,7 @@ export const ToastProvider = ({ children }) => {
     const [toasts, setToasts] = useState([]);
 
     const showToast = useCallback((message, type = 'info', duration = 3000) => {
-        const id = Date.now();
+        const id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
         setToasts((prev) => [...prev, { id, message, type }]);
         setTimeout(() => {
             setToasts((prev) => prev.filter((t) => t.id !== id));
@@ -22,8 +22,8 @@ export const ToastProvider = ({ children }) => {
                     <div
                         key={toast.id}
                         className={`p-4 rounded-lg shadow-lg text-white ${toast.type === 'success' ? 'bg-green-500' :
-                                toast.type === 'error' ? 'bg-red-500' :
-                                    toast.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
+                            toast.type === 'error' ? 'bg-red-500' :
+                                toast.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
                             }`}
                     >
                         {toast.message}

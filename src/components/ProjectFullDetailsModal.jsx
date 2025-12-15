@@ -176,6 +176,59 @@ const ProjectFullDetailsModal = ({ isOpen, onClose, project }) => {
                                     </div>
                                 </DetailSection>
 
+                                {/* 7. Block Diagrams & Visuals */}
+                                <DetailSection title="Block Diagrams" icon={Layers} className="col-span-1 md:col-span-2">
+                                    {(project.block_diagrams && project.block_diagrams.length > 0) || project.block_diagram_url ? (
+                                        <div className="space-y-4">
+                                            {project.block_diagram_url && (
+                                                <div className="relative group rounded-lg overflow-hidden border border-gray-200 dark:border-white/10">
+                                                    <img src={project.block_diagram_url} alt="Main Block Diagram" className="w-full h-auto object-cover" />
+                                                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-sm font-medium">
+                                                        Main Diagram
+                                                    </div>
+                                                </div>
+                                            )}
+                                            {project.block_diagrams && project.block_diagrams.map((bd, idx) => (
+                                                <div key={idx} className="flex items-center justify-between p-3 bg-white dark:bg-white/5 rounded-lg border border-gray-100 dark:border-white/5">
+                                                    <span className="text-sm font-medium">{bd.title || `Diagram ${idx + 1}`}</span>
+                                                    <a href={bd.url} target="_blank" rel="noopener noreferrer" className="text-primary text-xs hover:underline">View</a>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p className="text-gray-500 italic text-sm">No block diagrams available.</p>
+                                    )}
+                                </DetailSection>
+
+                                {/* 8. Documents & Downloads */}
+                                <DetailSection title="Documents" icon={Database} className="col-span-1">
+                                    {project.project_documents && project.project_documents.length > 0 ? (
+                                        <div className="space-y-2">
+                                            {project.project_documents.map((doc, idx) => (
+                                                <a
+                                                    key={idx}
+                                                    href={doc.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/10 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/20 transition-colors group"
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-8 h-8 rounded bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                                                            <span className="text-xs font-bold">PDF</span>
+                                                        </div>
+                                                        <div className="flex flex-col">
+                                                            <span className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{doc.title || `Document ${idx + 1}`}</span>
+                                                            <span className="text-[10px] text-gray-500">Download</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p className="text-gray-500 italic text-sm">No documents attached.</p>
+                                    )}
+                                </DetailSection>
+
                             </div>
 
                             {/* Footer / CTA */}

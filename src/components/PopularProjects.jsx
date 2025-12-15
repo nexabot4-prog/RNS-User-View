@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ShoppingCart, Check, Clock, Star } from 'lucide-react'
+import { ShoppingCart, Check, Clock, Star, ArrowRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useToast } from './Toast'
 import { projectsAPI, ordersAPI } from '../utils/api'
@@ -270,15 +270,23 @@ const PopularProjects = () => {
     return (
         <section id="projects" className="bg-primary/5 dark:bg-black py-16 sm:py-24">
             <div className="container mx-auto px-4">
-                <motion.h2
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl mb-8"
-                >
-                    Popular Projects
-                </motion.h2>
+                <div className="relative mb-12 flex items-center justify-center">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        viewport={{ once: true }}
+                        className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl text-center"
+                    >
+                        Popular Projects
+                    </motion.h2>
+                    <button
+                        onClick={() => navigate('/projects')}
+                        className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-all shadow-lg hover:shadow-primary/25"
+                    >
+                        View all projects <ArrowRight size={18} />
+                    </button>
+                </div>
 
                 {/* Search Bar */}
                 <div className="w-full max-w-xl mx-auto mb-8">
@@ -327,7 +335,22 @@ const PopularProjects = () => {
                         {categories
                             .filter(c => c.id !== 'all' && (activeCategory === 'all' || activeCategory === c.id))
                             .map((category, index, array) => {
-                                const categoryProjects = filteredProjects.filter(p => p.category === category.id);
+                                // Filter projects based on category mapping
+                                const categoryProjects = filteredProjects.filter(p => {
+                                    const cat = (p.category || '').toLowerCase();
+                                    if (category.id === 'hardware') {
+                                        return cat.includes('hardware') || cat.includes('kit');
+                                    }
+                                    if (category.id === 'software') {
+                                        return cat.includes('software') || cat.includes('app') || cat.includes('cloud');
+                                    }
+                                    if (category.id === 'integration') {
+                                        return cat.includes('integration') || cat.includes('full-stack') || cat.includes('web') ||
+                                            cat.includes('iot') || cat.includes('robotics') || cat.includes('embedded') || cat.includes('automation') ||
+                                            cat.includes('ai') || cat.includes('vision') || cat.includes('intelligence');
+                                    }
+                                    return false;
+                                });
 
                                 if (categoryProjects.length === 0) return null;
 

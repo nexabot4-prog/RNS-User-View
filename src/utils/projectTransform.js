@@ -5,9 +5,12 @@ export const transformProject = (project, index) => {
         const lowerTitle = (project.title || '').toLowerCase();
         const lowerDesc = (project.description || '').toLowerCase();
 
-        if (lowerTitle.includes('software') || lowerTitle.includes('app') || lowerDesc.includes('app')) {
+        if (lowerTitle.includes('software') || lowerTitle.includes('app') || lowerDesc.includes('app') ||
+            lowerTitle.includes('ai') || lowerTitle.includes('vision') || lowerTitle.includes('detection') || lowerTitle.includes('web')) {
             category = 'software';
-        } else if (lowerTitle.includes('kit') || lowerTitle.includes('hardware') || lowerTitle.includes('arm')) {
+        } else if (lowerTitle.includes('kit') || lowerTitle.includes('hardware') || lowerTitle.includes('arm') ||
+            lowerTitle.includes('robot') || lowerTitle.includes('iot') || lowerTitle.includes('embedded') ||
+            lowerTitle.includes('automation') || lowerTitle.includes('system') || lowerTitle.includes('vehicle')) {
             category = 'hardware';
         } else {
             category = 'integration';

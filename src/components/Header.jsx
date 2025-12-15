@@ -38,9 +38,9 @@ const Header = ({ onNavigate }) => {
             name: 'Projects',
             href: '#projects',
             dropdown: [
-                { name: 'Robotics Kits', href: '#projects' },
-                { name: 'IoT Systems', href: '#projects' },
-                { name: 'Arduino Bundles', href: '#projects' }
+                { name: 'Hardware', href: '#projects' },
+                { name: 'Software', href: '#projects' },
+                { name: 'Integration', href: '#projects' }
             ]
         },
         {
@@ -148,6 +148,14 @@ const Header = ({ onNavigate }) => {
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 handleNavClick(dropItem.href);
+                                                // Dispatch filter event if category matches
+                                                const category = dropItem.name.toLowerCase();
+                                                if (['hardware', 'software', 'integration'].includes(category)) {
+                                                    // Small delay to ensure we scroll first then filter
+                                                    setTimeout(() => {
+                                                        window.dispatchEvent(new CustomEvent('filter-category', { detail: category }));
+                                                    }, 100);
+                                                }
                                             }}
                                         >
                                             {dropItem.name}

@@ -46,12 +46,20 @@ create table public.orders (
   custom_deadline date null,
   custom_requirements text null,
   custom_features text null,
+  file_url text null,
   user_id uuid null,
   user_email text null,
   created_at timestamp without time zone not null default CURRENT_TIMESTAMP,
   constraint orders_pkey primary key (id),
   constraint orders_project_id_fkey foreign KEY (project_id) references projects (id) on delete cascade
 ) TABLESPACE pg_default;
+
+-- STORAGE BUCKET SETUP (Run this in SQL Editor if bucket doesn't exist)
+-- insert into storage.buckets (id, name, public) values ('customer-files', 'customer-files', true);
+
+-- Storage Policies
+-- create policy "Public Access" on storage.objects for select using ( bucket_id = 'customer-files' );
+-- create policy "Public Upload" on storage.objects for insert with check ( bucket_id = 'customer-files' );
 
 -- Grant necessary permissions to the anon and authenticated roles
 GRANT USAGE ON SCHEMA public TO anon, authenticated;

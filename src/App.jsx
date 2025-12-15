@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // Lazy load components
 const LandingPage = lazy(() => import('./components/LandingPage'));
 const ProjectDetails = lazy(() => import('./components/ProjectDetails'));
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
 
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -21,6 +22,7 @@ function App() {
                             <Suspense fallback={<LoadingFallback />}>
                                 <Routes>
                                     <Route path="/" element={<LandingPage />} />
+                                    <Route path="/projects" element={<ProjectsPage />} />
                                     <Route path="/project/:id" element={<ProjectDetails />} />
                                 </Routes>
                             </Suspense>

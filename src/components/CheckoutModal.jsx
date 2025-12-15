@@ -4,9 +4,13 @@ import { X, User, Mail, School, Phone, ShoppingCart, Loader2 } from 'lucide-reac
 import { useToast } from './Toast';
 import { ordersAPI } from '../utils/api';
 
+import OrderSuccessModal from './OrderSuccessModal';
+
 const CheckoutModal = ({ isOpen, onClose, project }) => {
     const { showToast } = useToast();
     const [loading, setLoading] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [successDetails, setSuccessDetails] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -42,8 +46,20 @@ const CheckoutModal = ({ isOpen, onClose, project }) => {
         });
 
         if (success) {
-            showToast(`Order placed successfully for ${project.title}!`, 'success');
-            onClose(true);
+            const orderDetailsForModal = {
+                project_title: project.title,
+                customer_name: formData.name,
+                user_email: formData.email,
+                phone_number: formData.phone,
+                id: 'ORD-' + Math.random().toString(36).substr(2, 6).toUpperCase()
+            };
+
+            setSuccessDetails(orderDetailsForModal);
+            setShowSuccess(true);
+
+            // Send Email in background
+            ordersAPI.sendOrderEmail(orderDetailsForModal);
+
             setFormData({ name: '', email: '', phone: '', college: '' });
         } else {
             showToast('Failed to place order. Please try again.', 'error');
@@ -51,9 +67,22 @@ const CheckoutModal = ({ isOpen, onClose, project }) => {
         setLoading(false);
     };
 
+    const handleSuccessClose = () => {
+        setShowSuccess(false);
+        onClose(true);
+    };
+
     return (
         <AnimatePresence>
-            {isOpen && (
+            {showSuccess && (
+                <OrderSuccessModal
+                    isOpen={showSuccess}
+                    onClose={handleSuccessClose}
+                    orderDetails={successDetails}
+                    type="buy_now"
+                />
+            )}
+            {isOpen && !showSuccess && (
                 <>
                     {/* Backdrop */}
                     <motion.div

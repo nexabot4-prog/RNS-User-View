@@ -5,9 +5,13 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { useToast } from "@/components/Toast";
 import { ordersAPI } from '../utils/api';
 
+import OrderSuccessModal from './OrderSuccessModal';
+
 const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
     const { showToast } = useToast();
     const [step, setStep] = useState(1);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [successDetails, setSuccessDetails] = useState(null);
     const [formData, setFormData] = useState({
         // Step 1: Basic Details
         title: projectTitle || '',
@@ -91,6 +95,17 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
 
         showToast('Submitting request...', 'info');
 
+        let fileUrl = null;
+        if (formData.file) {
+            showToast('Uploading file...', 'info');
+            const { success, publicUrl, error: uploadError } = await ordersAPI.uploadFile(formData.file);
+            if (!success) {
+                showToast(uploadError || 'File upload failed. Please try again.', 'error');
+                return;
+            }
+            fileUrl = publicUrl;
+        }
+
         const { success, error: apiError } = await ordersAPI.createOrder({
             project_title: formData.title,
             // Use 0 or a base price if available, or null if schema allows (we made it nullable)
@@ -106,13 +121,28 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
             custom_abstract: formData.abstract,
             custom_deadline: formData.deadline,
             custom_requirements: formData.requirements,
-            custom_features: formData.features
+            custom_features: formData.features,
+            file_url: fileUrl
             // Note: File upload logic would go here if API supported storage
         });
 
         if (success) {
-            showToast('Customization request submitted!', 'success');
-            onClose(true);
+            // showToast('Customization request submitted!', 'success');
+            // Trigger Success Modal instead of closing immediately
+            const orderDetailsForModal = {
+                project_title: formData.title,
+                customer_name: formData.name,
+                user_email: formData.email,
+                phone_number: formData.phone,
+                id: 'REF-' + Math.random().toString(36).substr(2, 6).toUpperCase() // Placeholder ID until API returns real one
+            };
+            setSuccessDetails(orderDetailsForModal);
+            setShowSuccess(true);
+
+            // Send Email in background
+            ordersAPI.sendOrderEmail(orderDetailsForModal);
+
+            // Reset form in background
             setTimeout(() => setStep(1), 500);
             setFormData({
                 title: projectTitle || '',
@@ -131,6 +161,11 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
             console.error(apiError);
             showToast('Failed to submit request. Please try again.', 'error');
         }
+    };
+
+    const handleSuccessClose = () => {
+        setShowSuccess(false);
+        onClose(true); // Close parent modal
     };
 
     const renderStep1 = () => (
@@ -183,6 +218,7 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                 </label>
                 <input
                     type="date"
+                    min={new Date().toISOString().split('T')[0]}
                     value={formData.deadline}
                     onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
                     className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all [color-scheme:dark]"
@@ -327,7 +363,15 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
 
     return (
         <AnimatePresence>
-            {isOpen && (
+            {showSuccess && (
+                <OrderSuccessModal
+                    isOpen={showSuccess}
+                    onClose={handleSuccessClose}
+                    orderDetails={successDetails}
+                    type="customization"
+                />
+            )}
+            {isOpen && !showSuccess && (
                 <>
                     {/* Backdrop */}
                     <motion.div

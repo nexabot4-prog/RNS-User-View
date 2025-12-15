@@ -120,7 +120,7 @@ const RobotProjectDetails = ({ project }) => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 }}
-                            className="flex items-center gap-6 mt-12"
+                            className="flex flex-wrap items-center gap-4 mt-12 justify-start"
                         >
                             <button
                                 onClick={() => setIsCheckoutModalOpen(true)}
@@ -151,6 +151,18 @@ const RobotProjectDetails = ({ project }) => {
                                     </div>
                                 </div>
                             </button>
+
+                            {project.demo_video_url && (
+                                <a
+                                    href={project.demo_video_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 shadow-lg hover:scale-110 transition-transform group"
+                                    title="Watch Demo"
+                                >
+                                    <Zap size={20} className="text-yellow-500 fill-yellow-500" />
+                                </a>
+                            )}
 
 
                         </motion.div>
@@ -190,6 +202,139 @@ const RobotProjectDetails = ({ project }) => {
             {/* Specs Section Removed */}
 
             {/* Gallery Section - Kept separate as it doesn't fit the wobble grid slightly */}
+            {/* Packages Section */}
+            {project.packages && project.packages.length > 0 && (
+                <section className="py-20 bg-white dark:bg-[#0A0A0A] relative z-20">
+                    <div className="max-w-[1600px] mx-auto px-8">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            viewport={{ once: true }}
+                            className="mb-12"
+                        >
+                            <h2 className="text-4xl font-bold mb-4 text-black dark:text-white">Project Packages</h2>
+                            <p className="text-gray-500 dark:text-gray-400 max-w-2xl">Choose the configuration that best suits your needs.</p>
+                        </motion.div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {project.packages.map((pkg, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.1, duration: 0.5 }}
+                                    viewport={{ once: true }}
+                                    className="group relative bg-[#F2F2F2] dark:bg-[#111] border border-gray-200 dark:border-white/5 rounded-3xl p-8 hover:border-blue-500/50 transition-colors overflow-hidden"
+                                >
+                                    <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                                        <Box size={100} />
+                                    </div>
+
+                                    <h3 className="text-2xl font-bold mb-2 text-black dark:text-white">{pkg.name || `Package ${idx + 1}`}</h3>
+                                    <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-6">
+                                        ₹{pkg.price ? Number(pkg.price).toLocaleString() : 'TBD'}
+                                    </div>
+
+                                    {pkg.description && (
+                                        <p className="text-gray-600 dark:text-gray-400 mb-6">{pkg.description}</p>
+                                    )}
+
+                                    <div className="space-y-4 mb-8">
+                                        {pkg.features && pkg.features.map((feature, fIdx) => (
+                                            <div key={fIdx} className="flex items-start gap-3">
+                                                <div className="mt-1 w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                                                    <div className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400" />
+                                                </div>
+                                                <span className="text-gray-700 dark:text-gray-300 text-sm">{feature}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <button
+                                        onClick={() => setIsCheckoutModalOpen(true)}
+                                        className="w-full py-4 rounded-xl bg-black dark:bg-white text-white dark:text-black font-bold hover:bg-blue-600 dark:hover:bg-blue-400 hover:text-white dark:hover:text-black transition-all"
+                                    >
+                                        Select Package
+                                    </button>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* Project Gallery & Technical Resources */}
+            {(project.project_images?.length > 0 || project.block_diagrams?.length > 0) && (
+                <section className="py-20 bg-[#F0F2F5] dark:bg-[#050505] relative z-20">
+                    <div className="max-w-[1600px] mx-auto px-8">
+                        {project.project_images?.length > 0 && (
+                            <div className="mb-20">
+                                <h2 className="text-4xl font-bold mb-12 text-black dark:text-white">Visual Gallery</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                    {project.project_images.map((img, idx) => (
+                                        <motion.div
+                                            key={idx}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: idx * 0.1 }}
+                                            className="aspect-square rounded-2xl overflow-hidden border border-gray-200 dark:border-white/10 group relative"
+                                        >
+                                            <img
+                                                src={typeof img === 'string' ? img : img.url}
+                                                alt={`Gallery ${idx}`}
+                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                                            />
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {(project.block_diagrams?.length > 0 || project.project_documents?.length > 0) && (
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                                {project.block_diagrams?.length > 0 && (
+                                    <div>
+                                        <h3 className="text-2xl font-bold mb-6 text-black dark:text-white flex items-center gap-3">
+                                            <Layers className="text-blue-600" /> Block Diagrams
+                                        </h3>
+                                        <div className="space-y-4">
+                                            {project.block_diagrams.map((bd, idx) => (
+                                                <div key={idx} className="bg-white dark:bg-[#111] p-4 rounded-xl border border-gray-200 dark:border-white/5 flex items-center justify-between group hover:border-blue-500/30 transition-colors">
+                                                    <span className="font-medium text-gray-700 dark:text-gray-300">{bd.title || `System Diagram ${idx + 1}`}</span>
+                                                    <a href={bd.url} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-blue-600 dark:text-blue-400 group-hover:underline">View</a>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                                {project.project_documents?.length > 0 && (
+                                    <div>
+                                        <h3 className="text-2xl font-bold mb-6 text-black dark:text-white flex items-center gap-3">
+                                            <Database className="text-purple-600" /> Documentation
+                                        </h3>
+                                        <div className="space-y-4">
+                                            {project.project_documents.map((doc, idx) => (
+                                                <a
+                                                    key={idx}
+                                                    href={doc.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="bg-white dark:bg-[#111] p-4 rounded-xl border border-gray-200 dark:border-white/5 flex items-center justify-between group hover:border-purple-500/30 transition-colors"
+                                                >
+                                                    <span className="font-medium text-gray-700 dark:text-gray-300">{doc.title || `Tech Spec ${idx + 1}`}</span>
+                                                    <div className="px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-xs font-bold">PDF</div>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </section>
+            )}
+
             {/* Gallery Section Removed */}
 
             <CustomizationModal
