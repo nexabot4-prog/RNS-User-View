@@ -10,7 +10,7 @@ import CustomizationModal from './CustomizationModal'
 import ProjectFullDetailsModal from './ProjectFullDetailsModal'
 import CheckoutModal from './CheckoutModal'
 
-import RobotProjectDetails from './RobotProjectDetails'
+
 
 const ProjectDetails = () => {
     const { id } = useParams()
@@ -54,14 +54,7 @@ const ProjectDetails = () => {
     if (loading) return <div className="min-h-screen bg-black" />
     if (!project) return null
 
-    // Check if it's a robot project for special UI
-    const isRobotProject = project.title.toLowerCase().includes('robot') ||
-        project.title.toLowerCase().includes('robo') ||
-        project.category?.toLowerCase() === 'robotics';
 
-    if (isRobotProject) {
-        return <RobotProjectDetails project={project} />;
-    }
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-[#0A0A0A] text-gray-900 dark:text-white pt-20 px-4 md:px-8 pb-12 overflow-x-hidden font-display">
@@ -111,29 +104,32 @@ const ProjectDetails = () => {
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="bg-white dark:bg-[#1A1A1A] rounded-[2rem] p-6 h-48 relative overflow-hidden group shadow-lg dark:shadow-none"
+                            className="bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 rounded-[2rem] p-6 h-36 relative overflow-hidden group shadow-lg"
                         >
                             <div className="absolute top-4 left-4">
-                                <Plus className="text-gray-600 w-4 h-4" />
+                                <Plus className="text-gray-600 dark:text-gray-300 w-4 h-4" />
                             </div>
                             <div className="absolute bottom-4 left-4">
-                                <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase">Priority Rating</p>
-                                <p className="text-sm font-bold text-gray-900 dark:text-white">{project.priority ? project.priority.toUpperCase() : 'STANDARD'}</p>
+                                <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Priority Rating</p>
+                                <p className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
+                                    {project.priority ? project.priority.toUpperCase() : 'STANDARD'}
+                                </p>
                             </div>
-                            <div className="w-full h-full bg-gradient-to-br from-purple-900/20 to-transparent absolute top-0 left-0" />
+                            <div className="absolute -right-4 -top-4 w-24 h-24 bg-purple-500/20 rounded-full blur-2xl group-hover:bg-purple-500/30 transition-colors" />
                         </motion.div>
                         <motion.div
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
                             onClick={() => setIsDetailsModalOpen(true)}
-                            className="bg-white dark:bg-[#1A1A1A] rounded-full flex items-center justify-center h-48 border border-gray-200 dark:border-white/5 relative group cursor-pointer hover:bg-gray-100 dark:hover:bg-white/5 transition-colors shadow-lg dark:shadow-none"
+                            className="bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center h-36 relative group cursor-pointer hover:bg-white/20 transition-all shadow-lg overflow-hidden"
                         >
-                            <div className="text-center">
-                                <div className="w-12 h-12 rounded-full border border-gray-300 dark:border-white/20 flex items-center justify-center mx-auto mb-2 group-hover:bg-gray-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black transition-colors">
-                                    <ArrowUpRight size={20} />
+                            <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="text-center z-10">
+                                <div className="w-12 h-12 rounded-full border border-purple-500/30 flex items-center justify-center mx-auto mb-2 bg-white/10 backdrop-blur-sm group-hover:scale-110 transition-transform">
+                                    <ArrowUpRight size={20} className="text-purple-600 dark:text-purple-400" />
                                 </div>
-                                <span className="text-xs tracking-widest text-gray-400">MORE DETAILS</span>
+                                <span className="text-xs tracking-widest text-gray-600 dark:text-gray-300 font-bold group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-colors">MORE DETAILS</span>
                             </div>
                         </motion.div>
                     </div>
