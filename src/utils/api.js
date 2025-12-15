@@ -102,6 +102,7 @@ export const ordersAPI = {
                 },
             });
             if (error) throw error;
+            console.log('Email sent successfully:', data);
             return { success: true, data };
         } catch (error) {
             console.error('Error sending email:', error);

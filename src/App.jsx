@@ -10,6 +10,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { ToastProvider, LayoutProvider } from './components/Toast';
 import ScrollToTop from './components/ScrollToTop';
 import LoadingFallback from './components/LoadingFallback';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
     return (
@@ -20,11 +21,13 @@ function App() {
                         <BrowserRouter>
                             <ScrollToTop />
                             <Suspense fallback={<LoadingFallback />}>
-                                <Routes>
-                                    <Route path="/" element={<LandingPage />} />
-                                    <Route path="/projects" element={<ProjectsPage />} />
-                                    <Route path="/project/:id" element={<ProjectDetails />} />
-                                </Routes>
+                                <ErrorBoundary>
+                                    <Routes>
+                                        <Route path="/" element={<LandingPage />} />
+                                        <Route path="/projects" element={<ProjectsPage />} />
+                                        <Route path="/project/:id" element={<ProjectDetails />} />
+                                    </Routes>
+                                </ErrorBoundary>
                             </Suspense>
                         </BrowserRouter>
                     </ToastProvider>

@@ -10,158 +10,96 @@ import CheckoutModal from './CheckoutModal'
 import { Link, Plus } from 'lucide-react'
 
 import { Button as MovingBorderButton } from "@/components/ui/moving-border";
-import { useFollowerPointer } from "@/components/ui/following-pointer";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
 
 const ProjectCard = ({ project, navigate, addedToCart, handleAddToCart }) => {
-    const { setTitle } = useFollowerPointer();
-
     return (
         <motion.div
             onClick={() => navigate(`/project/${project.id}`)}
-            onMouseEnter={() => setTitle(project.title)}
-            onMouseLeave={() => setTitle(null)}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -10, scale: 1.02 }}
-            transition={{
-                duration: 0.6,
-                delay: project.delay,
-                hover: { duration: 0.3 }
-            }}
+            whileHover={{ y: -8 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
             viewport={{ once: true }}
-            className="product-card group relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden cursor-none h-full"
+            className="product-card group relative bg-white dark:bg-neutral-900 rounded-2xl shadow-xl hover:shadow-2xl overflow-hidden h-full border border-neutral-100 dark:border-neutral-800 flex flex-col"
         >
-            {/* Priority Badge */}
-            {project.isHighPriority && (
-                <div className="absolute top-4 right-4 z-10">
-                    <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${project.priorityColor.bg} ${project.priorityColor.text}`}>
-                        <Star className="w-3 h-3" />
-                        HIGH PRIORITY
-                    </span>
-                </div>
-            )}
+            {/* Image Container with Overlay Action */}
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-neutral-800">
+                <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.6 }}
+                    className="w-full h-full bg-cover bg-center"
+                    style={{ backgroundImage: `url("${project.image}")` }}
+                />
 
-            <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-                className="aspect-video w-full bg-gray-200 bg-cover bg-center overflow-hidden"
-                style={{ backgroundImage: `url("${project.image}")` }}
-            />
-
-            <div className="flex flex-1 flex-col p-6">
-                <motion.h3
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: project.delay + 0.2 }}
-                    viewport={{ once: true }}
-                    className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors"
-                >
-                    {project.title}
-                </motion.h3>
-
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: project.delay + 0.3 }}
-                    viewport={{ once: true }}
-                    className="mt-2 flex-grow text-sm text-gray-600 dark:text-gray-400"
-                >
-                    {project.description}
-                </motion.p>
-
-                {/* Features Preview */}
-                {project.hasFeatures && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ delay: project.delay + 0.4 }}
-                        viewport={{ once: true }}
-                        className="mt-3"
-                    >
-                        <div className="flex flex-wrap gap-1">
-                            {project.features.slice(0, 3).map((feature, idx) => (
-                                <span
-                                    key={idx}
-                                    className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-2 py-1 rounded-full"
-                                >
-                                    {feature}
-                                </span>
-                            ))}
-                            {project.features.length > 3 && (
-                                <span className="text-xs text-gray-500 dark:text-gray-400 px-2 py-1">
-                                    +{project.features.length - 3} more
-                                </span>
-                            )}
-                        </div>
-                    </motion.div>
+                {/* Priority Badge */}
+                {project.isHighPriority && (
+                    <div className="absolute top-3 left-3 z-10">
+                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase shadow-sm ${project.priorityColor.bg} ${project.priorityColor.text} backdrop-blur-md bg-opacity-90`}>
+                            <Star className="w-3 h-3 fill-current" />
+                            Premium
+                        </span>
+                    </div>
                 )}
 
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: project.delay + 0.4 }}
-                    viewport={{ once: true }}
-                    className="mt-6"
-                >
-                    {/* Price Section */}
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex flex-col">
-                            <p className="text-xl font-bold text-primary">{project.formattedPrice || `₹${project.price}`}</p>
-                            {project.spent > 0 && (
-                                <p className="text-xs text-gray-500 dark:text-gray-400">
-                                    Spent: {project.spent}
-                                </p>
-                            )}
-                        </div>
-                        <div className="flex flex-col items-end gap-1">
-                            {project.priority && (
-                                <span className={`text-xs font-medium px-2 py-1 rounded-full ${project.priorityColor.bg} ${project.priorityColor.text}`}>
-                                    {project.priority.toUpperCase()}
-                                </span>
-                            )}
-                            {project.progressPercentage > 0 && (
-                                <div className="flex items-center gap-1">
-                                    <Clock className="w-3 h-3 text-gray-400" />
-                                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                                        {project.progressPercentage.toFixed(0)}% spent
-                                    </span>
-                                </div>
-                            )}
-                        </div>
+                {/* Hover Overlay with Quick Action */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                    <button
+                        className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 bg-white text-black px-6 py-2.5 rounded-full font-bold text-sm hover:scale-105 active:scale-95 shadow-xl"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/project/${project.id}`);
+                        }}
+                    >
+                        View Details
+                    </button>
+                </div>
+            </div>
+
+            <div className="flex flex-1 flex-col p-5">
+                {/* Category Tag */}
+                <div className="mb-2">
+                    <span className="text-[10px] font-bold text-primary uppercase tracking-wider">{project.category || 'Engineering'}</span>
+                </div>
+
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-2 line-clamp-2 min-h-[3rem]">
+                    {project.title}
+                </h3>
+
+                {project.hasFeatures && (
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                        {project.features.slice(0, 2).map((feature, idx) => (
+                            <span key={idx} className="text-[10px] px-2 py-0.5 bg-gray-100 dark:bg-neutral-800 text-gray-600 dark:text-gray-400 rounded-md">
+                                {feature}
+                            </span>
+                        ))}
+                    </div>
+                )}
+
+                <div className="mt-auto pt-4 border-t border-gray-100 dark:border-neutral-800 flex items-center justify-between">
+                    <div>
+                        <p className="text-xs text-gray-400 font-medium mb-0.5">Price</p>
+                        <p className="text-xl font-bold text-gray-900 dark:text-white">{project.formattedPrice || `₹${project.price}`}</p>
                     </div>
 
-                    {/* Add to Cart Button with Moving Border */}
-                    <MovingBorderButton
-                        borderRadius="0.5rem"
+                    <button
                         onClick={(e) => handleAddToCart(e, project.id, project.title, project.price)}
-                        containerClassName="w-full h-12"
-                        className={`flex items-center justify-center gap-2 text-sm font-bold ${addedToCart[project.id]
-                            ? 'bg-green-500 text-white border-none'
-                            : 'bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800'
-                            }`}
                         disabled={addedToCart[project.id]}
+                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-md ${addedToCart[project.id]
+                                ? 'bg-green-500 text-white'
+                                : 'bg-primary text-white hover:bg-primary/90 hover:scale-110 active:scale-90'
+                            }`}
+                        aria-label={addedToCart[project.id] ? "Added to cart" : "Add to cart"}
                     >
-                        {addedToCart[project.id] ? (
-                            <>
-                                <Check className="w-4 h-4" />
-                                <span>Added to Cart!</span>
-                            </>
-                        ) : (
-                            <>
-                                <ShoppingCart className="w-4 h-4" />
-                                <span>Buy Now</span>
-                            </>
-                        )}
-                    </MovingBorderButton>
-                </motion.div>
+                        {addedToCart[project.id] ? <Check size={18} /> : <ShoppingCart size={18} />}
+                    </button>
+                </div>
             </div>
         </motion.div>
     );
 };
 
 const RequestProjectCard = ({ setIsModalOpen }) => {
-    const { setTitle } = useFollowerPointer();
 
     return (
         <motion.div
@@ -170,9 +108,7 @@ const RequestProjectCard = ({ setIsModalOpen }) => {
             whileHover={{ y: -5, scale: 1.02 }}
             transition={{ duration: 0.4 }}
             onClick={() => setIsModalOpen(true)}
-            onMouseEnter={() => setTitle("New Request")}
-            onMouseLeave={() => setTitle(null)}
-            className="product-card group relative bg-white/5 dark:bg-white/5 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 flex flex-col items-center justify-center p-8 cursor-none hover:border-primary/50 hover:bg-primary/5 transition-all text-center min-h-[400px]"
+            className="product-card group relative bg-white/5 dark:bg-white/5 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 flex flex-col items-center justify-center p-8 hover:border-primary/50 hover:bg-primary/5 transition-all text-center min-h-[400px]"
         >
             <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Plus className="w-8 h-8 text-primary" />
@@ -183,7 +119,7 @@ const RequestProjectCard = ({ setIsModalOpen }) => {
             <p className="text-gray-400 text-sm max-w-xs mx-auto mb-6">
                 Can't find what you're looking for? Start a new project from scratch with your specific requirements.
             </p>
-            <button className="px-6 py-2 rounded-full bg-primary/10 text-primary font-bold text-sm group-hover:bg-primary group-hover:text-primary-foreground transition-all cursor-none">
+            <button className="px-6 py-2 rounded-full bg-primary/10 text-primary font-bold text-sm group-hover:bg-primary group-hover:text-primary-foreground transition-all">
                 Start New Request
             </button>
         </motion.div>

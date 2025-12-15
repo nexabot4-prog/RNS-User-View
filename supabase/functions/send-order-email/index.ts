@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const RESEND_API_KEY = "re_6Fkxwtok_KFLzQwnMmbuaVFxrfvUnyCWL";
+const RESEND_API_KEY = "re_SqkSv9Fq_2XkCavxDXo5PmS4XB8yCHSCp";
 
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -40,6 +40,13 @@ serve(async (req) => {
         });
 
         const data = await res.json();
+
+        if (!res.ok) {
+            return new Response(JSON.stringify(data), {
+                headers: { ...corsHeaders, "Content-Type": "application/json" },
+                status: res.status, // Propagate 4xx/5xx from Resend
+            });
+        }
 
         return new Response(JSON.stringify(data), {
             headers: { ...corsHeaders, "Content-Type": "application/json" },
