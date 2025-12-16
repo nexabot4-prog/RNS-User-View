@@ -185,7 +185,7 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
             className="space-y-4"
         >
             <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <Type size={16} className="text-primary" />
                     Project Title (Custom)
                 </label>
@@ -193,14 +193,14 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                     type="text"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-gray-600"
+                    className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600"
                     placeholder="e.g. Advanced IOT Surveillance System"
                     required
                 />
             </div>
 
             <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <FileText size={16} className="text-primary" />
                     Project Abstract / Description
                     <span className="ml-auto text-xs text-gray-500">
@@ -214,14 +214,14 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                             setFormData({ ...formData, abstract: e.target.value });
                         }
                     }}
-                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all h-32 resize-none placeholder:text-gray-600 custom-scrollbar"
+                    className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all h-32 resize-none placeholder:text-gray-500 dark:placeholder:text-gray-600 custom-scrollbar"
                     placeholder="Describe your project idea, core features, and specific goals..."
                     required
                 />
             </div>
 
             <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <Calendar size={16} className="text-primary" />
                     Preferred Deadline
                 </label>
@@ -230,7 +230,7 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                     min={new Date().toISOString().split('T')[0]}
                     value={formData.deadline}
                     onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
-                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all [color-scheme:dark]"
+                    className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all [color-scheme:light] dark:[color-scheme:dark]"
                     required
                 />
             </div>
@@ -245,40 +245,40 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
             className="space-y-4"
         >
             <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <Type size={16} className="text-primary" />
                     Project Requirements & Specs
                 </label>
                 <textarea
                     value={formData.requirements}
                     onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
-                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all h-24 resize-none placeholder:text-gray-600 custom-scrollbar"
+                    className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all h-24 resize-none placeholder:text-gray-500 dark:placeholder:text-gray-600 custom-scrollbar"
                     placeholder="Hardware specs, microcontroller preferences, specific sensors..."
                     required
                 />
             </div>
 
             <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <Star size={16} className="text-primary" />
                     Key Features
                 </label>
                 <textarea
                     value={formData.features}
                     onChange={(e) => setFormData({ ...formData, features: e.target.value })}
-                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all h-24 resize-none placeholder:text-gray-600 custom-scrollbar"
+                    className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all h-24 resize-none placeholder:text-gray-500 dark:placeholder:text-gray-600 custom-scrollbar"
                     placeholder="List the must-have features..."
                     required
                 />
             </div>
 
             <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <Upload size={16} className="text-primary" />
                     Reference Documents (PDF)
                     <span className="ml-auto text-xs text-gray-500">Max {MAX_FILE_SIZE_MB}MB</span>
                 </label>
-                <div className="w-full border border-dashed bg-black/40 border-white/10 rounded-lg overflow-hidden">
+                <div className="w-full border border-dashed bg-gray-50 dark:bg-black/40 border-gray-300 dark:border-white/10 rounded-lg overflow-hidden">
                     <FileUpload onChange={handleFileUpload} description="Upload Synopsis or Basic Report (PDF format)" />
                 </div>
             </div>
@@ -293,7 +293,7 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
             className="space-y-4"
         >
             <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <User size={16} className="text-primary" />
                     Full Name
                 </label>
@@ -301,14 +301,14 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-gray-600"
+                    className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600"
                     placeholder="Your Name"
                     required
                 />
             </div>
 
             <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <Mail size={16} className="text-primary" />
                     Email Address
                 </label>
@@ -316,14 +316,14 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-gray-600"
+                    className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600"
                     placeholder="your.email@example.com"
                     required
                 />
             </div>
 
             <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <Type size={16} className="text-primary" />
                     Phone Number
                 </label>
@@ -334,14 +334,14 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                         const val = e.target.value.replace(/\D/g, '').slice(0, 10);
                         setFormData({ ...formData, phone: val });
                     }}
-                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-gray-600"
+                    className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600"
                     placeholder="10-digit Phone Number"
                     required
                 />
             </div>
 
             <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <School size={16} className="text-primary" />
                     College / Organization Name
                 </label>
@@ -349,7 +349,7 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                     type="text"
                     value={formData.college}
                     onChange={(e) => setFormData({ ...formData, college: e.target.value })}
-                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-gray-600"
+                    className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600"
                     placeholder="University Name"
                     required
                 />
@@ -398,17 +398,17 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none"
                     >
-                        <div className="bg-[#1A1A1A] border border-white/10 w-full max-w-xl rounded-2xl shadow-2xl pointer-events-auto overflow-hidden flex flex-col max-h-[90vh]">
+                        <div className="bg-white dark:bg-[#1A1A1A] border border-gray-200 dark:border-white/10 w-full max-w-xl rounded-2xl shadow-2xl pointer-events-auto overflow-hidden flex flex-col max-h-[90vh]">
                             {/* Header */}
-                            <div className="relative p-6 border-b border-white/10 bg-[#1A1A1A] flex justify-center items-center">
+                            <div className="relative p-6 border-b border-gray-100 dark:border-white/10 bg-white dark:bg-[#1A1A1A] flex justify-center items-center">
                                 <div className="flex flex-col items-center space-y-2">
                                     <span className="bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wider uppercase border border-primary/20">
                                         Step {step} of 3
                                     </span>
-                                    <h3 className="text-xl font-bold text-white tracking-wide">{getStepTitle()}</h3>
-                                    <p className="text-sm text-gray-400">
+                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-wide">{getStepTitle()}</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">
                                         {projectTitle ? (
-                                            <>Customizing <span className="text-white italic">"{projectTitle}"</span></>
+                                            <>Customizing <span className="text-gray-900 dark:text-white italic">"{projectTitle}"</span></>
                                         ) : (
                                             <span className="text-primary font-medium">New Project Request</span>
                                         )}
@@ -416,14 +416,14 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                                 </div>
                                 <button
                                     onClick={() => onClose(false)}
-                                    className="absolute right-6 top-6 p-2 hover:bg-white/10 rounded-full transition-colors group"
+                                    className="absolute right-6 top-6 p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-colors group"
                                 >
-                                    <X className="text-gray-400 group-hover:text-white transition-colors" size={20} />
+                                    <X className="text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" size={20} />
                                 </button>
                             </div>
 
                             {/* Progress Bar */}
-                            <div className="w-full bg-white/5 h-1">
+                            <div className="w-full bg-gray-100 dark:bg-white/5 h-1">
                                 <motion.div
                                     className="h-full bg-primary"
                                     initial={{ width: '33%' }}
@@ -444,11 +444,11 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                             </div>
 
                             {/* Footer Actions */}
-                            <div className="p-6 border-t border-white/10 bg-[#1A1A1A] flex justify-between items-center">
+                            <div className="p-6 border-t border-gray-100 dark:border-white/10 bg-white dark:bg-[#1A1A1A] flex justify-between items-center">
                                 <button
                                     type="button"
                                     onClick={prevStep}
-                                    className={`flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition-colors ${step === 1 ? 'invisible' : ''}`}
+                                    className={`flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors ${step === 1 ? 'invisible' : ''}`}
                                 >
                                     <ChevronLeft size={16} /> Back
                                 </button>
@@ -457,7 +457,7 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                                     <button
                                         type="button"
                                         onClick={nextStep}
-                                        className="bg-white text-black font-bold px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-gray-200 transition-colors"
+                                        className="bg-black dark:bg-white text-white dark:text-black font-bold px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors shadow-lg"
                                     >
                                         Next <ChevronRight size={16} />
                                     </button>
@@ -465,7 +465,7 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                                     <button
                                         form="customization-form"
                                         type="submit"
-                                        className="bg-white text-black font-bold px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-gray-200 transition-colors"
+                                        className="bg-black dark:bg-white text-white dark:text-black font-bold px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors shadow-lg"
                                     >
                                         Submit Request <Send size={16} />
                                     </button>

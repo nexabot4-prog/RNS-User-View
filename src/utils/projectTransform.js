@@ -24,7 +24,17 @@ export const transformProject = (project, index) => {
         description: project.description || '', // Prevent crash in search filter
         // Explicitly prioritize image_url from the database, then fallbacks
         image: project.image_url || project.imageUrl || project.image || 'https://images.unsplash.com/photo-1555664424-778a69d25679?auto=format&fit=crop&q=80',
-        price: project.budget !== undefined && project.budget !== null ? Number(project.budget) : (project.price || 0),
+        price: (() => {
+            const b = project.budget;
+            if (b === undefined || b === null) return project.price || 0;
+            if (typeof b === 'number') return b;
+            if (typeof b === 'string') return isNaN(Number(b)) ? 0 : Number(b);
+            // Handle if it's a JSON object wrapper (e.g. { min: 9500, max: 12000 })
+            if (typeof b === 'object') {
+                return Number(b.max) || Number(b.min) || 0;
+            }
+            return 0;
+        })(),
         category: category,
         features: project.features || [],
         components: project.components || [],
@@ -53,6 +63,12 @@ export const transformProject = (project, index) => {
         progressPercentage: project.spent && mapped.price
             ? (project.spent / mapped.price) * 100
             : Math.random() * 100,
-        formattedPrice: `₹${mapped.price}` // Keep original raw price for logic, add formatted for display
+        formattedPrice: (() => {
+            const b = project.budget;
+            if (b && typeof b === 'object' && (b.min || b.max)) {
+                return `₹${b.min || 0} - ₹${b.max || 0}`;
+            }
+            return `₹${mapped.price}`;
+        })()
     };
 };

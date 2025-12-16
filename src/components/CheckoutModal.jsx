@@ -100,27 +100,27 @@ const CheckoutModal = ({ isOpen, onClose, project }) => {
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none text-left"
                     >
-                        <div className="bg-[#1A1A1A] border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl pointer-events-auto overflow-hidden flex flex-col">
+                        <div className="bg-white dark:bg-[#1A1A1A] border border-gray-200 dark:border-white/10 w-full max-w-lg rounded-2xl shadow-2xl pointer-events-auto overflow-hidden flex flex-col">
                             {/* Header */}
-                            <div className="p-6 border-b border-white/10 bg-[#1A1A1A] flex justify-between items-center">
+                            <div className="p-6 border-b border-gray-100 dark:border-white/10 bg-white dark:bg-[#1A1A1A] flex justify-between items-center">
                                 <div>
-                                    <h3 className="text-xl font-bold text-white tracking-wide">Checkout</h3>
-                                    <p className="text-sm text-gray-400 mt-1">
-                                        Buying <span className="text-white font-medium">{project?.title}</span>
+                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-wide">Checkout</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                        Buying <span className="text-gray-900 dark:text-white font-medium">{project?.title}</span>
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => onClose(false)}
-                                    className="p-2 hover:bg-white/10 rounded-full transition-colors group"
+                                    className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-colors group"
                                 >
-                                    <X className="text-gray-400 group-hover:text-white transition-colors" size={20} />
+                                    <X className="text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" size={20} />
                                 </button>
                             </div>
 
                             {/* Form Content */}
                             <form onSubmit={handleSubmit} className="p-6 space-y-4">
                                 <div>
-                                    <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                                    <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         <User size={16} className="text-blue-500" />
                                         Full Name <span className="text-red-500">*</span>
                                     </label>
@@ -128,14 +128,14 @@ const CheckoutModal = ({ isOpen, onClose, project }) => {
                                         type="text"
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-600"
+                                        className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600"
                                         placeholder="Enter your full name"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                                    <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         <Mail size={16} className="text-blue-500" />
                                         Email Address <span className="text-red-500">*</span>
                                     </label>
@@ -143,14 +143,14 @@ const CheckoutModal = ({ isOpen, onClose, project }) => {
                                         type="email"
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-600"
+                                        className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600"
                                         placeholder="Enter your email"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                                    <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         <Phone size={16} className="text-blue-500" />
                                         Phone Number <span className="text-red-500">*</span>
                                     </label>
@@ -161,14 +161,14 @@ const CheckoutModal = ({ isOpen, onClose, project }) => {
                                             const val = e.target.value.replace(/\D/g, '').slice(0, 10);
                                             setFormData({ ...formData, phone: val });
                                         }}
-                                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-600"
+                                        className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600"
                                         placeholder="10-digit mobile number"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
+                                    <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         <School size={16} className="text-blue-500" />
                                         College / Organization (Optional)
                                     </label>
@@ -176,7 +176,7 @@ const CheckoutModal = ({ isOpen, onClose, project }) => {
                                         type="text"
                                         value={formData.college}
                                         onChange={(e) => setFormData({ ...formData, college: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-600"
+                                        className="w-full bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600"
                                         placeholder="Enter college name"
                                     />
                                 </div>

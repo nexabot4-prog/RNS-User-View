@@ -70,7 +70,7 @@ const ProjectFullDetailsModal = ({ isOpen, onClose, project }) => {
                                     <div className="space-y-4">
                                         <div className="flex justify-between border-b border-dashed border-gray-200 dark:border-gray-700 pb-2">
                                             <span className="text-gray-500 text-sm">Status</span>
-                                            <span className="font-medium capitalize">{project.status || 'Active'}</span>
+                                            <span className="font-medium capitalize">-</span>
                                         </div>
                                         <div className="flex justify-between border-b border-dashed border-gray-200 dark:border-gray-700 pb-2">
                                             <span className="text-gray-500 text-sm">Priority</span>
@@ -81,10 +81,6 @@ const ProjectFullDetailsModal = ({ isOpen, onClose, project }) => {
                                         <div className="flex justify-between border-b border-dashed border-gray-200 dark:border-gray-700 pb-2">
                                             <span className="text-gray-500 text-sm">Budget</span>
                                             <span className="font-medium text-green-600 dark:text-green-400">{project.formattedPrice}</span>
-                                        </div>
-                                        <div className="flex justify-between border-b border-dashed border-gray-200 dark:border-gray-700 pb-2">
-                                            <span className="text-gray-500 text-sm">Spent</span>
-                                            <span className="font-medium">₹{project.spent}</span>
                                         </div>
                                     </div>
                                 </DetailSection>
@@ -116,7 +112,7 @@ const ProjectFullDetailsModal = ({ isOpen, onClose, project }) => {
                                             {Object.entries(project.tech_specs).map(([key, value]) => (
                                                 <div key={key} className="bg-white dark:bg-black/20 p-3 rounded-lg border border-gray-100 dark:border-white/5">
                                                     <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">{key.replace(/_/g, ' ')}</p>
-                                                    <p className="font-mono text-sm font-medium break-words">{value}</p>
+                                                    <p className="font-medium text-sm text-gray-700 dark:text-gray-200 break-words">{value}</p>
                                                 </div>
                                             ))}
                                         </div>

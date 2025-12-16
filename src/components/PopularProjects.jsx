@@ -86,8 +86,8 @@ const ProjectCard = ({ project, navigate, addedToCart, handleAddToCart }) => {
                         onClick={(e) => handleAddToCart(e, project.id, project.title, project.price)}
                         disabled={addedToCart[project.id]}
                         className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-md ${addedToCart[project.id]
-                                ? 'bg-green-500 text-white'
-                                : 'bg-primary text-white hover:bg-primary/90 hover:scale-110 active:scale-90'
+                            ? 'bg-green-500 text-white'
+                            : 'bg-primary text-white hover:bg-primary/90 hover:scale-110 active:scale-90'
                             }`}
                         aria-label={addedToCart[project.id] ? "Added to cart" : "Add to cart"}
                     >
