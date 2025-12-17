@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowUpRight, Play, Star, Plus, Settings2 } from 'lucide-react'
 import { projectsAPI, ordersAPI } from '../utils/api'
@@ -15,6 +15,7 @@ import CheckoutModal from './CheckoutModal'
 const ProjectDetails = () => {
     const { id } = useParams()
     const navigate = useNavigate()
+    const location = useLocation()
     const [project, setProject] = useState(null)
     const [loading, setLoading] = useState(true)
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -53,8 +54,6 @@ const ProjectDetails = () => {
 
     if (loading) return <div className="min-h-screen bg-black" />
     if (!project) return null
-
-
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-[#0A0A0A] text-gray-900 dark:text-white pt-20 px-4 md:px-8 pb-12 overflow-x-hidden font-display">

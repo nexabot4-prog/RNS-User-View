@@ -41,8 +41,10 @@ const CustomizationModal = ({ isOpen, onClose, projectTitle }) => {
                 showToast(`File size exceeds ${MAX_FILE_SIZE_MB}MB limit.`, 'error');
                 return;
             }
-            // Optional: Basic type check if needed, though FileUpload might allow any type
-            // if (file.type !== 'application/pdf') { ... } 
+            if (file.type !== 'application/pdf') {
+                showToast('Only PDF files are allowed.', 'error');
+                return;
+            }
 
             setFormData({ ...formData, file: file });
         }

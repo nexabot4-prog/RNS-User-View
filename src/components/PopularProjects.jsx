@@ -87,7 +87,7 @@ const ProjectCard = ({ project, navigate, addedToCart, handleAddToCart }) => {
                         disabled={addedToCart[project.id]}
                         className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-md ${addedToCart[project.id]
                             ? 'bg-green-500 text-white'
-                            : 'bg-primary text-white hover:bg-primary/90 hover:scale-110 active:scale-90'
+                            : 'bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-110 active:scale-90'
                             }`}
                         aria-label={addedToCart[project.id] ? "Added to cart" : "Add to cart"}
                     >
@@ -206,19 +206,19 @@ const PopularProjects = () => {
     return (
         <section id="projects" className="bg-primary/5 dark:bg-black py-16 sm:py-24">
             <div className="container mx-auto px-4">
-                <div className="relative mb-12 flex items-center justify-center">
+                <div className="relative mb-12 flex flex-col md:flex-row items-center justify-center md:justify-between gap-4">
                     <motion.h2
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl text-center"
+                        className="text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:absolute md:left-1/2 md:-translate-x-1/2"
                     >
                         Popular Projects
                     </motion.h2>
                     <button
                         onClick={() => navigate('/projects')}
-                        className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-all shadow-lg hover:shadow-primary/25"
+                        className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-all shadow-lg hover:shadow-primary/25 md:ml-auto"
                     >
                         View all projects <ArrowRight size={18} />
                     </button>

@@ -11,6 +11,7 @@ import { ToastProvider, LayoutProvider } from './components/Toast';
 import ScrollToTop from './components/ScrollToTop';
 import LoadingFallback from './components/LoadingFallback';
 import ErrorBoundary from './components/ErrorBoundary';
+import Chatbot from './components/Chatbot';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <ToastProvider>
                         <BrowserRouter>
                             <ScrollToTop />
+                            <Chatbot />
                             <Suspense fallback={<LoadingFallback />}>
                                 <ErrorBoundary>
                                     <Routes>
@@ -29,11 +31,11 @@ function App() {
                                     </Routes>
                                 </ErrorBoundary>
                             </Suspense>
-                        </BrowserRouter>
-                    </ToastProvider>
-                </LayoutProvider>
-            </ThemeProvider>
-        </AuthProvider>
+                        </BrowserRouter >
+                    </ToastProvider >
+                </LayoutProvider >
+            </ThemeProvider >
+        </AuthProvider >
     );
 }
 
