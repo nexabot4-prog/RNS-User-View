@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useToast } from './Toast'
 import { projectsAPI, ordersAPI } from '../utils/api'
 import { transformProject } from '../utils/projectTransform'
+import { getOptimizedImageUrl } from '../utils/imageOptimizer'
 import CustomizationModal from './CustomizationModal'
 import CheckoutModal from './CheckoutModal'
 import TermsModal from './TermsModal'
@@ -27,8 +28,10 @@ const ProjectCard = ({ project, navigate, addedToCart, handleAddToCart }) => {
             {/* Image Container with Overlay Action */}
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-neutral-800">
                 <motion.img
-                    src={project.image}
+                    src={getOptimizedImageUrl(project.image, 600)}
                     alt={project.title}
+                    width={600}
+                    height={450}
                     loading="lazy"
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.6 }}
