@@ -40,6 +40,7 @@ const WhatsAppWidget = () => {
                                     <button
                                         onClick={(e) => { e.stopPropagation(); setIsExpanded(false); }}
                                         className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                                        aria-label="Close chat"
                                     >
                                         <X size={14} />
                                     </button>
@@ -65,6 +66,7 @@ const WhatsAppWidget = () => {
                         whileTap={{ scale: 0.9 }}
                         onClick={() => setIsExpanded(!isExpanded)}
                         className="w-14 h-14 bg-[#25D366] hover:bg-[#20bd5a] rounded-full flex items-center justify-center text-white relative group"
+                        aria-label="Toggle WhatsApp chat"
                     >
                         {isExpanded ? <X size={28} /> : (
                             <svg
