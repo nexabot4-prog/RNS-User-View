@@ -103,15 +103,11 @@ const Chatbot = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setIsOpen(true)}
-                        className="fixed bottom-24 right-6 z-50 flex items-center gap-3 bg-white/10 dark:bg-black/20 backdrop-blur-md p-2 pr-6 rounded-full shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 dark:border-white/10 group cursor-pointer hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300"
+                        className="fixed bottom-4 right-6 z-50 flex items-center justify-center bg-white/10 dark:bg-black/20 backdrop-blur-md p-2 rounded-full shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 dark:border-white/10 group cursor-pointer hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300"
                     >
                         <div className="relative">
                             <img src={lumoLogo} alt="Lumo" className="w-12 h-12 rounded-full object-cover border-2 border-white/20 dark:border-white/10" />
                             <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white/20 dark:border-white/10 rounded-full animate-pulse"></span>
-                        </div>
-                        <div className="text-left">
-                            <p className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors drop-shadow-sm">Chat with Lumo</p>
-                            <p className="text-xs text-gray-800 dark:text-gray-200 font-medium">Ask about projects!</p>
                         </div>
                     </motion.button>
                 ) : (
@@ -123,7 +119,7 @@ const Chatbot = () => {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => setIsOpen(false)}
-                        className="fixed bottom-24 right-6 z-50 p-4 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-md text-white shadow-lg hover:shadow-xl border border-white/20 transition-all duration-300 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/40"
+                        className="fixed bottom-4 right-6 z-50 p-4 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-md text-white shadow-lg hover:shadow-xl border border-white/20 transition-all duration-300 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/40"
                     >
                         <X className="w-6 h-6 text-gray-800 dark:text-white" />
                     </motion.button>
@@ -138,7 +134,7 @@ const Chatbot = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 50, scale: 0.9 }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="fixed bottom-44 right-6 z-50 w-[380px] max-w-[calc(100vw-48px)] h-[600px] max-h-[calc(100vh-12rem)] flex flex-col bg-white/10 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/5 rounded-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] overflow-hidden"
+                        className="fixed bottom-20 right-6 z-50 w-[380px] max-w-[calc(100vw-48px)] h-[600px] max-h-[calc(100vh-12rem)] flex flex-col bg-white/10 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/5 rounded-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] overflow-hidden"
                     >
                         {/* Header */}
                         <div className="p-4 bg-gradient-to-r from-violet-600/90 to-indigo-600/90 backdrop-blur-md flex items-center gap-3 border-b border-white/10">

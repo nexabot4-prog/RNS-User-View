@@ -128,6 +128,12 @@ export default {
 						transform: 'translateX(0)'
 					}
 				}
+			},
+			animation: {
+				'fade-in': 'fadeIn 0.6s ease-out',
+				'slide-up': 'slideUp 0.6s ease-out',
+				'slide-in-left': 'slideInLeft 0.6s ease-out',
+				'slide-in-right': 'slideInRight 0.6s ease-out'
 			}
 		}
 	},
