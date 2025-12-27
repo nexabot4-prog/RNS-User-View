@@ -3,9 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import Hero from '../Hero';
 
 // 1. Mock heavy/animated components
-vi.mock('../SplineRobot', () => ({
-    default: () => <div data-testid="mock-spline-robot" />
-}));
+
 
 vi.mock('@/components/ui/background-beams', () => ({
     BackgroundBeams: () => <div data-testid="mock-background-beams" />
@@ -46,24 +44,29 @@ describe('Hero Component', () => {
         // Implicitly passes if render doesn't throw
     });
 
-    it('renders main text content via mocked typewriter', () => {
+    it('renders main text content via mocked typewriter', async () => {
         render(<Hero />);
         // Words1: "Build the Future, One"
-        expect(screen.getByText(/Build/i)).toBeInTheDocument();
+        // Since TypewriterEffectSmooth is lazy loaded, we must await its appearance
+        expect(await screen.findByText(/Build/i)).toBeInTheDocument();
+
         // "Project" appears in title and description, so strictly check for existence
-        const projectTexts = screen.getAllByText(/Project/i);
+        // findAllByText handles multiple occurrences
+        const projectTexts = await screen.findAllByText(/Project/i);
         expect(projectTexts.length).toBeGreaterThan(0);
     });
 
-    it('renders the description paragraph', () => {
+    it('renders the description paragraph', async () => {
         render(<Hero />);
         // Matching a substantial part of the description
-        expect(screen.getByText(/End-to-end Arduino, IoT, and Robotics projects/i)).toBeInTheDocument();
+        expect(await screen.findByText(/End-to-end Arduino, IoT, and Robotics projects/i)).toBeInTheDocument();
     });
 
-    it('renders "Explore Projects" button and is clickable', () => {
+    it('renders "Buy Now" button and is clickable', async () => {
         render(<Hero />);
-        const button = screen.getByText(/Explore Projects/i).closest('button');
+        // Wait for lazy loaded button
+        const span = await screen.findByText(/Buy Now/i);
+        const button = span.closest('button');
         expect(button).toBeInTheDocument();
 
         // Mock the target section for scroll logic
@@ -80,14 +83,17 @@ describe('Hero Component', () => {
         document.body.removeChild(projectSection);
     });
 
-    it('renders "Get in Touch" button', () => {
+    it('renders "New Start – New Request" button', async () => {
         render(<Hero />);
-        const button = screen.getByRole('button', { name: /Get in Touch/i });
+        // Use findBy for lazy loaded components if needed, or getByText content
+        // ShimmerButton renders the text.
+        const button = await screen.findByText(/New Start – New Request/i);
         expect(button).toBeInTheDocument();
     });
 
-    it('mocks background visuals correctly', () => {
+    it('mocks background visuals correctly', async () => {
         render(<Hero />);
-        expect(screen.getByTestId('mock-background-beams')).toBeInTheDocument();
+        // BackgroundBeams is lazy loaded and inside Suspense
+        expect(await screen.findByTestId('mock-background-beams')).toBeInTheDocument();
     });
 });

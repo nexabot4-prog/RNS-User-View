@@ -13,6 +13,7 @@ export const AnimatedTooltip = ({
     onUserClick
 }) => {
     const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [clickedIndex, setClickedIndex] = useState(null);
     const springConfig = { stiffness: 100, damping: 5 };
     const x = useMotionValue(0); // going to set this value on mouse move
     // rotate the tooltip
@@ -33,7 +34,7 @@ export const AnimatedTooltip = ({
                     onMouseEnter={() => setHoveredIndex(item.id)}
                     onMouseLeave={() => setHoveredIndex(null)}>
                     <AnimatePresence mode="popLayout">
-                        {hoveredIndex === item.id && (
+                        {(hoveredIndex === item.id || clickedIndex === item.id) && (
                             <motion.div
                                 initial={{ opacity: 0, y: 20, scale: 0.6 }}
                                 animate={{
@@ -60,12 +61,17 @@ export const AnimatedTooltip = ({
                                 <div className="font-bold text-white relative z-30 text-base">
                                     {item.name}
                                 </div>
-                                <div className="text-white text-xs">{item.designation}</div>
+                                {clickedIndex === item.id && (
+                                    <div className="text-white text-xs">{item.designation}</div>
+                                )}
                             </motion.div>
                         )}
                     </AnimatePresence>
                     <img
-                        onClick={() => onUserClick && onUserClick(item)}
+                        onClick={() => {
+                            setClickedIndex(prev => prev === item.id ? null : item.id);
+                            if (onUserClick) onUserClick(item);
+                        }}
                         onMouseMove={handleMouseMove}
                         height={100}
                         width={100}

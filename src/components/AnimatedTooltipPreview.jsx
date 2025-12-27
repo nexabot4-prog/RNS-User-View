@@ -4,17 +4,17 @@ import { AnimatedTooltip } from "./ui/animated-tooltip";
 const people = [
     {
         id: 1,
-        name: "R",
-        designation: "Core Team",
+        name: "Sharan Kumar Reddy",
+        designation: "Founder & Embedded Systems / Product Lead",
         image:
-            "/assets/avatars/gojo_avatar.png",
+            "/assets/avatars/team_member_1.png",
     },
     {
         id: 2,
-        name: "N",
-        designation: "Core Team",
+        name: "Nithin Reddy",
+        designation: "Founder & Full-Stack Web Engineering / Embedded Systems / Product Lead",
         image:
-            "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+            "/assets/avatars/team_member_2.png",
     },
     {
         id: 3,

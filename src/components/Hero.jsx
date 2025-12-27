@@ -17,38 +17,38 @@ const Hero = () => {
     const words1 = [
         {
             text: "Build\u00A0",
-            className: "text-gray-900 dark:text-white",
+            className: "text-gray-900 dark:text-white text-xl sm:text-4xl xl:text-5xl",
         },
         {
             text: "the\u00A0",
-            className: "text-gray-900 dark:text-white",
+            className: "text-gray-900 dark:text-white text-xl sm:text-4xl xl:text-5xl",
         },
         {
             text: "Future,\u00A0",
-            className: "text-gray-900 dark:text-white",
+            className: "text-gray-900 dark:text-white text-xl sm:text-4xl xl:text-5xl",
         },
         {
             text: "One",
-            className: "text-primary dark:text-primary",
+            className: "text-primary dark:text-primary text-xl sm:text-4xl xl:text-5xl",
         },
     ];
 
     const words2 = [
         {
             text: "Project\u00A0",
-            className: "text-primary dark:text-primary",
+            className: "text-primary dark:text-primary text-xl sm:text-4xl xl:text-5xl",
         },
         {
             text: "at\u00A0",
-            className: "text-primary dark:text-primary",
+            className: "text-primary dark:text-primary text-xl sm:text-4xl xl:text-5xl",
         },
         {
             text: "a\u00A0",
-            className: "text-primary dark:text-primary",
+            className: "text-primary dark:text-primary text-xl sm:text-4xl xl:text-5xl",
         },
         {
             text: "Time.",
-            className: "text-primary dark:text-primary",
+            className: "text-primary dark:text-primary text-xl sm:text-4xl xl:text-5xl",
         },
     ];
 
@@ -70,7 +70,7 @@ const Hero = () => {
                         transition={{ duration: 0.8 }}
                         className="flex flex-col gap-6 items-center max-w-4xl"
                     >
-                        <div className="flex flex-col items-center -space-y-4 scale-90 sm:scale-100 min-h-[100px] justify-center">
+                        <div className="flex flex-col items-center -space-y-4 sm:scale-100 min-h-[100px] justify-center">
                             <Suspense fallback={<div className="h-12 w-full" />}>
                                 <TypewriterEffectSmooth
                                     words={words1}

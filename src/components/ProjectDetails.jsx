@@ -113,14 +113,14 @@ const ProjectDetails = () => {
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 rounded-[2rem] p-6 h-36 relative overflow-hidden group shadow-lg"
+                            className="bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 rounded-[2rem] p-4 md:p-6 h-20 md:h-36 relative overflow-hidden group shadow-lg"
                         >
-                            <div className="absolute top-4 left-4">
-                                <Plus className="text-gray-600 dark:text-gray-300 w-4 h-4" />
+                            <div className="absolute top-2 md:top-4 left-4">
+                                <Plus className="text-gray-600 dark:text-gray-300 w-3 h-3 md:w-4 md:h-4" />
                             </div>
-                            <div className="absolute bottom-4 left-4">
-                                <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Priority Rating</p>
-                                <p className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
+                            <div className="absolute bottom-2 md:bottom-4 left-4">
+                                <p className="text-[9px] md:text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Priority Rating</p>
+                                <p className="text-base md:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
                                     {project.priority ? project.priority.toUpperCase() : 'STANDARD'}
                                 </p>
                             </div>
@@ -131,14 +131,14 @@ const ProjectDetails = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
                             onClick={() => setIsDetailsModalOpen(true)}
-                            className="bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center h-36 relative group cursor-pointer hover:bg-white/20 transition-all shadow-lg overflow-hidden"
+                            className="bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center h-20 md:h-36 relative group cursor-pointer hover:bg-white/20 transition-all shadow-lg overflow-hidden"
                         >
                             <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                             <div className="text-center z-10">
-                                <div className="w-12 h-12 rounded-full border border-purple-500/30 flex items-center justify-center mx-auto mb-2 bg-white/10 backdrop-blur-sm group-hover:scale-110 transition-transform">
-                                    <ArrowUpRight size={20} className="text-purple-600 dark:text-purple-400" />
+                                <div className="w-8 h-8 md:w-12 md:h-12 rounded-full border border-purple-500/30 flex items-center justify-center mx-auto mb-1 md:mb-2 bg-white/10 backdrop-blur-sm group-hover:scale-110 transition-transform">
+                                    <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 text-purple-600 dark:text-purple-400" />
                                 </div>
-                                <span className="text-xs tracking-widest text-gray-600 dark:text-gray-300 font-bold group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-colors">MORE DETAILS</span>
+                                <span className="text-[9px] md:text-xs tracking-widest text-gray-600 dark:text-gray-300 font-bold group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-colors">MORE DETAILS</span>
                             </div>
                         </motion.div>
                     </div>
@@ -168,7 +168,7 @@ const ProjectDetails = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5 }}
-                        className="flex items-center gap-6 mb-16"
+                        className="flex flex-wrap items-center gap-4 mb-12"
                     >
                         <button
                             onClick={() => {
@@ -178,7 +178,7 @@ const ProjectDetails = () => {
                                 setPendingAction('checkout');
                                 setIsTermsModalOpen(true);
                             }}
-                            className="bg-gray-900 dark:bg-white text-white dark:text-black px-8 py-4 rounded-full font-bold text-sm tracking-widest hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
+                            className="flex-1 md:flex-none bg-gray-900 dark:bg-white text-white dark:text-black px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-xs md:text-sm tracking-widest hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors whitespace-nowrap text-center"
                         >
                             Buy Now
                         </button>
@@ -187,21 +187,21 @@ const ProjectDetails = () => {
                                 setPendingAction('customize');
                                 setIsTermsModalOpen(true);
                             }}
-                            className="bg-transparent border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white px-8 py-4 rounded-full font-bold text-sm tracking-widest hover:bg-gray-100 dark:hover:bg-white/10 transition-colors flex items-center gap-2"
+                            className="flex-1 md:flex-none bg-transparent border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-xs md:text-sm tracking-widest hover:bg-gray-100 dark:hover:bg-white/10 transition-colors flex items-center justify-center gap-2 whitespace-nowrap"
                         >
                             <Settings2 size={16} />
-                            Customize Project
+                            Customize
                         </button>
                         <a
                             href={project.demo_video_url || '#'}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`h-14 w-32 bg-white dark:bg-[#1A1A1A] rounded-full flex items-center px-4 gap-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-[#252525] transition-colors shadow-md dark:shadow-none ${!project.demo_video_url && 'opacity-50 cursor-not-allowed pointer-events-none'}`}
+                            className={`flex-1 md:flex-none h-12 md:h-14 min-w-[140px] md:w-32 bg-white dark:bg-[#1A1A1A] rounded-full flex items-center justify-center md:justify-start px-4 gap-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-[#252525] transition-colors shadow-md dark:shadow-none ${!project.demo_video_url && 'opacity-50 cursor-not-allowed pointer-events-none'}`}
                         >
-                            <div className="w-8 h-8 bg-gray-900 dark:bg-black rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-gray-900 dark:bg-black rounded-full flex items-center justify-center flex-shrink-0">
                                 <Play size={12} fill="white" />
                             </div>
-                            <span className="text-xs text-gray-400">Watch<br />Demo</span>
+                            <span className="text-xs text-gray-400 leading-tight">Watch<br className="hidden md:block" /> Demo</span>
                         </a>
                     </motion.div>
 

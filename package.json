@@ -11,6 +11,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
     "@supabase/supabase-js": "^2.87.1",
     "@tabler/icons-react": "^3.36.0",
     "class-variance-authority": "^0.7.1",

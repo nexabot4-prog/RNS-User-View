@@ -13,6 +13,7 @@ import { Link, Plus } from 'lucide-react'
 
 import { Button as MovingBorderButton } from "@/components/ui/moving-border";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
+import { RainbowButton } from "@/components/ui/rainbow-button";
 
 const ProjectCard = ({ project, navigate, addedToCart, handleAddToCart }) => {
     return (
@@ -216,16 +217,16 @@ const PopularProjects = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:absolute md:left-1/2 md:-translate-x-1/2"
+                        className="text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:absolute md:left-[42%] md:-translate-x-1/2"
                     >
                         Popular Projects
                     </motion.h2>
-                    <button
+                    <RainbowButton
                         onClick={() => navigate('/projects')}
-                        className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-all shadow-lg hover:shadow-primary/25 md:ml-auto"
+                        className="md:ml-auto rounded-full font-bold shadow-lg hover:scale-105 transition-all h-10 px-6"
                     >
-                        View all projects <ArrowRight size={18} />
-                    </button>
+                        View all projects <ArrowRight size={18} className="ml-2" />
+                    </RainbowButton>
                 </div>
 
                 {/* Search Bar */}
