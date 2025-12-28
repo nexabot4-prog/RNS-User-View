@@ -123,7 +123,7 @@ const ProjectsPage = () => {
                 </div>
 
                 {/* Search and Filter */}
-                <div className="flex flex-col md:flex-row gap-6 items-center justify-between sticky top-20 z-30 bg-white/80 dark:bg-black/80 backdrop-blur-md p-4 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm dark:shadow-none">
+                <div className="flex flex-col md:flex-row gap-4 items-center justify-between z-30 bg-transparent p-2 mb-6">
                     {/* Search Bar */}
                     <div className="w-full md:w-96 relative top-0 md:-top-1">
                         <PlaceholdersAndVanishInput
@@ -133,59 +133,62 @@ const ProjectsPage = () => {
                         />
                     </div>
 
-                    {/* Mobile Refresh Button - visible only on small screens next to filters */}
-                    <button
-                        onClick={handleRefresh}
-                        className="md:hidden p-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white rounded-lg transition-colors border border-black/5 dark:border-white/5 self-end"
-                    >
-                        <div className={isRefreshing ? "animate-spin" : ""}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" /><path d="M16 16h5v5" /></svg>
-                        </div>
-                    </button>
+                    {/* Filter and Refresh Container */}
+                    <div className="w-full md:w-auto flex gap-3 items-center">
+                        {/* Filter Dropdown */}
+                        <div className="relative flex-1 md:w-72 z-40">
+                            <button
+                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                className="w-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 flex items-center justify-between text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/10 transition-colors shadow-sm dark:shadow-none"
+                            >
+                                <span className="truncate mr-2 font-medium">
+                                    {categories.find(c => c.value === activeTab)?.label || 'All Projects'}
+                                </span>
+                                <div className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}>
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                </div>
+                            </button>
 
-                    {/* Filter Dropdown */}
-                    <div className="relative w-full md:w-72 z-40">
+                            <AnimatePresence>
+                                {isDropdownOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#1A1A1A] border border-gray-200 dark:border-white/10 rounded-xl shadow-xl overflow-hidden py-2 z-50"
+                                    >
+                                        {categories.map((category) => (
+                                            <button
+                                                key={category.value}
+                                                onClick={() => {
+                                                    setActiveTab(category.value);
+                                                    setIsDropdownOpen(false);
+                                                }}
+                                                className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${activeTab === category.value
+                                                    ? 'bg-primary/20 text-primary font-bold'
+                                                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'
+                                                    }`}
+                                            >
+                                                {category.label}
+                                            </button>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Mobile Refresh Button */}
                         <button
-                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            className="w-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 flex items-center justify-between text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/10 transition-colors shadow-sm dark:shadow-none"
+                            onClick={handleRefresh}
+                            className="md:hidden p-3 bg-white dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white rounded-xl transition-colors border border-gray-200 dark:border-white/10 flex-shrink-0 bg-white"
                         >
-                            <span className="truncate mr-2 font-medium">
-                                {categories.find(c => c.value === activeTab)?.label || 'All Projects'}
-                            </span>
-                            <div className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}>
-                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
+                            <div className={isRefreshing ? "animate-spin" : ""}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" /><path d="M16 16h5v5" /></svg>
                             </div>
                         </button>
-
-                        <AnimatePresence>
-                            {isDropdownOpen && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    transition={{ duration: 0.2 }}
-                                    className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#1A1A1A] border border-gray-200 dark:border-white/10 rounded-xl shadow-xl overflow-hidden py-2 z-50"
-                                >
-                                    {categories.map((category) => (
-                                        <button
-                                            key={category.value}
-                                            onClick={() => {
-                                                setActiveTab(category.value);
-                                                setIsDropdownOpen(false);
-                                            }}
-                                            className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${activeTab === category.value
-                                                ? 'bg-primary/20 text-primary font-bold'
-                                                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'
-                                                }`}
-                                        >
-                                            {category.label}
-                                        </button>
-                                    ))}
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
                     </div>
                 </div>
 

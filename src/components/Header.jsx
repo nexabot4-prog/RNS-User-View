@@ -107,6 +107,18 @@ const Header = ({ onNavigate }) => {
         console.log("Search Submitted");
     };
 
+    // Handle body scroll lock when mobile menu is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
     return (
         <div className="relative w-full z-50">
             <Navbar className="fixed top-2">

@@ -5,14 +5,14 @@ const people = [
     {
         id: 1,
         name: "Sharan Kumar Reddy",
-        designation: "Founder & Embedded Systems / Product Lead",
+        designation: "Founder",
         image:
             "/assets/avatars/team_member_1.png",
     },
     {
         id: 2,
         name: "Nithin Reddy",
-        designation: "Founder & Full-Stack Web Engineering / Embedded Systems / Product Lead",
+        designation: "Founder",
         image:
             "/assets/avatars/team_member_2.png",
     },
@@ -49,7 +49,7 @@ const people = [
 export function AnimatedTooltipPreview() {
     return (
         <div className="flex flex-row items-center justify-center w-full z-20">
-            <AnimatedTooltip items={people.slice(0, 3)} />
+            <AnimatedTooltip items={people.slice(0, 2)} />
         </div>
     );
 }

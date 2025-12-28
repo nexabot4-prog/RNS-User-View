@@ -61,7 +61,7 @@ export const AnimatedTooltip = ({
                                 <div className="font-bold text-white relative z-30 text-base">
                                     {item.name}
                                 </div>
-                                {clickedIndex === item.id && (
+                                {(clickedIndex === item.id || hoveredIndex === item.id) && (
                                     <div className="text-white text-xs">{item.designation}</div>
                                 )}
                             </motion.div>
