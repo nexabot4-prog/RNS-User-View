@@ -8,7 +8,7 @@ import {
   useMotionValueEvent,
 } from "motion/react";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 
 export const Navbar = ({
@@ -21,6 +21,13 @@ export const Navbar = ({
     offset: ["start start", "end start"],
   });
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    // Sync initial state on mount
+    if (typeof window !== "undefined") {
+      setVisible(window.scrollY > 100);
+    }
+  }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 100) {
@@ -55,9 +62,10 @@ export const NavBody = ({
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
-        width: visible ? "65%" : "100%",
-        y: visible ? 20 : 0,
-        maxWidth: "80rem", // max-w-7xl equivalent
+        width: visible ? "60%" : "90%",
+        y: 20,
+        borderRadius: "9999px",
+        maxWidth: "80rem",
       }}
       transition={{
         type: "spring",
@@ -65,7 +73,7 @@ export const NavBody = ({
         damping: 50,
       }}
       className={cn(
-        "relative z-[60] mx-auto hidden w-full flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-1 lg:flex dark:bg-transparent",
+        "relative z-[60] mx-auto hidden w-full flex-row items-center justify-between rounded-full bg-transparent px-4 py-1 lg:flex dark:bg-transparent",
         visible && "bg-white/80 dark:bg-neutral-950/80",
         className
       )}>

@@ -54,7 +54,7 @@ const Contact = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="bg-white dark:bg-gray-900 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800"
+                        className="bg-white/80 dark:bg-white/5 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/20 dark:border-white/10"
                     >
                         <form className="space-y-6" onSubmit={handleSubmit}>
                             <div className="grid grid-cols-2 gap-6">
@@ -65,7 +65,7 @@ const Contact = () => {
                                         id="name"
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white"
+                                        className="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-black/20 border border-gray-200/50 dark:border-white/10 backdrop-blur-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white"
                                         placeholder="John Doe"
                                         required
                                     />
@@ -77,7 +77,7 @@ const Contact = () => {
                                         id="email"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white"
+                                        className="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-black/20 border border-gray-200/50 dark:border-white/10 backdrop-blur-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white"
                                         placeholder="john@example.com"
                                         required
                                     />
@@ -91,7 +91,7 @@ const Contact = () => {
                                     id="subject"
                                     value={formData.subject}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white"
+                                    className="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-black/20 border border-gray-200/50 dark:border-white/10 backdrop-blur-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white"
                                     placeholder="How can we help?"
                                     required
                                 />
@@ -104,7 +104,7 @@ const Contact = () => {
                                     rows="4"
                                     value={formData.message}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white"
+                                    className="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-black/20 border border-gray-200/50 dark:border-white/10 backdrop-blur-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white"
                                     placeholder="Tell us about your project..."
                                     required
                                 ></textarea>
@@ -114,7 +114,7 @@ const Contact = () => {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 type="submit"
-                                className="w-full py-4 bg-gradient-to-r from-primary to-purple-600 text-white rounded-xl font-semibold shadow-lg shadow-primary/25 flex items-center justify-center gap-2 hover:shadow-primary/40 transition-shadow"
+                                className="w-full py-4 bg-white/10 dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/20 text-gray-900 dark:text-white rounded-xl font-semibold shadow-lg shadow-black/5 flex items-center justify-center gap-2 hover:bg-black/5 dark:hover:bg-white/20 transition-all"
                             >
                                 Send Message
                                 <Send className="w-4 h-4" />

@@ -1,14 +1,17 @@
 import React, { useEffect, Suspense, lazy } from 'react'
+
+
+
 import Header from './Header'
 import Hero from './Hero'
 import { useLayoutContext } from './Toast'
 
 // Lazy load non-critical sections
-const BrandingShowcase = lazy(() => import('./BrandingShowcase').then(module => ({ default: module.BrandingShowcase })))
+
 const Categories = lazy(() => import('./Categories'))
 const PopularProjects = lazy(() => import('./PopularProjects'))
 const WhyChooseUs = lazy(() => import('./WhyChooseUs'))
-const CustomerReviews = lazy(() => import('./CustomerReviews'))
+
 const Contact = lazy(() => import('./Contact'))
 const Footer = lazy(() => import('./Footer'))
 
@@ -27,21 +30,25 @@ const LandingPage = ({ onNavigate }) => {
     }, [])
     return (
         <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-neutral-950 text-gray-800 dark:text-gray-200">
-            <Header onNavigate={onNavigate} />
-            <main className="flex-grow w-full">
-                <Hero />
-                <Suspense fallback={<SectionLoader />}>
-                    <BrandingShowcase />
-                    <Categories />
-                    <PopularProjects />
-                    <WhyChooseUs />
-                    <CustomerReviews />
-                    <Contact />
+
+
+            <div className="relative z-10 flex flex-col min-h-screen w-full">
+                <Header onNavigate={onNavigate} />
+                <main className="flex-grow w-full">
+                    <Hero />
+                    <Suspense fallback={<SectionLoader />}>
+
+                        <Categories />
+                        <PopularProjects />
+                        <WhyChooseUs />
+
+                        <Contact />
+                    </Suspense>
+                </main>
+                <Suspense fallback={<div className="h-24" />}>
+                    <Footer />
                 </Suspense>
-            </main>
-            <Suspense fallback={<div className="h-24" />}>
-                <Footer />
-            </Suspense>
+            </div>
         </div >
     )
 }

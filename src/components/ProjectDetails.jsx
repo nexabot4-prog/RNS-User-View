@@ -206,51 +206,56 @@ const ProjectDetails = () => {
                     </motion.div>
 
                     {/* Packages Section */}
-                    {project.packages && project.packages.length > 0 && (
-                        <div className="mb-12">
-                            <h3 className="text-2xl font-bold mb-6">Available Packages</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {project.packages.map((pkg, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.5 + (idx * 0.1) }}
-                                        className="bg-white dark:bg-[#1A1A1A] p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow"
-                                    >
-                                        <div className="flex justify-between items-start mb-4">
-                                            <h4 className="font-bold text-lg">{pkg.name || `Package ${idx + 1}`}</h4>
-                                            <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-bold">
-                                                ₹{pkg.price ? Number(pkg.price).toLocaleString() : 'TBD'}
-                                            </span>
-                                        </div>
-                                        {pkg.description && (
-                                            <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">{pkg.description}</p>
-                                        )}
-                                        {pkg.features && (
-                                            <ul className="space-y-2">
-                                                {pkg.features.map((feature, fIdx) => (
-                                                    <li key={fIdx} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                                                        {feature}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                        <button
-                                            onClick={() => {
-                                                setSelectedPackageForModal(pkg);
-                                                setIsCheckoutModalOpen(true);
-                                            }}
-                                            className="w-full mt-6 py-2 rounded-lg border border-gray-200 dark:border-white/10 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-sm font-medium"
+                    {(() => {
+                        const validPackages = project.packages?.filter(pkg => pkg.price && pkg.price !== 'TBD');
+                        if (!validPackages || validPackages.length === 0) return null;
+
+                        return (
+                            <div className="mb-12">
+                                <h3 className="text-2xl font-bold mb-6">Available Packages</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {validPackages.map((pkg, idx) => (
+                                        <motion.div
+                                            key={idx}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.5 + (idx * 0.1) }}
+                                            className="bg-white dark:bg-[#1A1A1A] p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow"
                                         >
-                                            Select Package
-                                        </button>
-                                    </motion.div>
-                                ))}
+                                            <div className="flex justify-between items-start mb-4">
+                                                <h4 className="font-bold text-lg">{pkg.name || `Package ${idx + 1}`}</h4>
+                                                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-bold">
+                                                    ₹{Number(pkg.price).toLocaleString()}
+                                                </span>
+                                            </div>
+                                            {pkg.description && (
+                                                <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">{pkg.description}</p>
+                                            )}
+                                            {pkg.features && (
+                                                <ul className="space-y-2">
+                                                    {pkg.features.map((feature, fIdx) => (
+                                                        <li key={fIdx} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                                                            {feature}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedPackageForModal(pkg);
+                                                    setIsCheckoutModalOpen(true);
+                                                }}
+                                                className="w-full mt-6 py-2 rounded-lg border border-gray-200 dark:border-white/10 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-sm font-medium"
+                                            >
+                                                Select Package
+                                            </button>
+                                        </motion.div>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        );
+                    })()}
 
                     {/* Numbered Feature List */}
                     <div className="space-y-6">
